@@ -4,12 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Ẩm thực Việt Nam</title>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:wght@700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root{
-            --accent:#7aa26b;
-            --muted:#f5f3ef;
-            --card:#fff;
+        :root {
+            --accent:#A0907D; /* Màu chủ đạo: Nâu xám ấm */
+            --muted:#F8F5EE; /* Màu nền phụ: Kem nhạt */
+            --card:#FFFCF7; /* Màu thẻ/nền trắng: Kem rất nhạt */
             --glass: rgba(255,255,255,0.85);
             --radius:14px;
             --shadow: 0 6px 18px rgba(0,0,0,0.08);
@@ -18,9 +18,22 @@
         *{box-sizing:border-box}
         body{
             margin:0;
-            font-family: "Nunito",system-ui,Segoe UI, Roboto, "Helvetica Neue", Arial;
-            background: linear-gradient(180deg,#fffef8 0%, #f7f7f5 100%);
-            color:#222;
+            font-family: "Nunito", system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+            background-color: var(--muted); /* Màu nền chính cho body, làm màu dự phòng */
+            color:#333; /* Màu chữ tổng thể: Đen mềm */
+            position: relative; /* Cần thiết để định vị pseudo-element */
+            min-height: 100vh; /* Đảm bảo body chiếm toàn bộ chiều cao viewport */
+            -webkit-font-smoothing:antialiased;
+        }
+        body::before {
+            content: '';
+            position: fixed; /* Giữ hình nền cố định khi cuộn */
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('images/background.jpg'); /* Đặt đường dẫn đến hình nền cổ điển của bạn */
+            background-size: cover; background-position: center;
+            filter: blur(15px); /* Hiệu ứng làm mờ cao */
+            z-index: -1; /* Đặt phía sau nội dung */
+            transform: scale(1.05); /* Phóng to nhẹ để tránh viền mờ */
             -webkit-font-smoothing:antialiased;
         }
 
@@ -29,15 +42,16 @@
             display:flex;
             align-items:center;
             gap:20px;
-            padding:18px 24px;
+            padding:18px 24px; /* Giữ nguyên padding */
             position:relative;
-            background: linear-gradient(90deg, rgba(250,248,243,0.9), rgba(255,255,255,0.6));
+            background: linear-gradient(90deg, rgba(248,245,238,0.9), rgba(255,252,247,0.6)); /* Điều chỉnh gradient header theo màu mới */
             border-bottom:1px solid #eee;
             z-index:10;
         }
         .logo{
             width:64px;height:64px;border-radius:8px;overflow:hidden;
-            background:linear-gradient(45deg,#e6f1df,#cfe8c1);
+            background:linear-gradient(45deg,#E6E0D9,#D9D0C4); /* Gradient logo theo màu mới */
+            cursor: pointer;
             display:flex;align-items:center;justify-content:center;
             flex:0 0 64px; border:2px solid rgba(0,0,0,0.04);
         }
@@ -46,18 +60,21 @@
             margin:0;
             flex:1;
             text-align:center;
-            font-family:"Merriweather", serif;
+            font-family:"Dancing Script", cursive; /* Font viết tay cách điệu */
             font-weight:700;
-            font-size:28px;
-            color:#3b4b2f;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+            font-size:52px; /* Tăng kích thước font */
+            color:#5C544A; /* Màu tiêu đề chính theo tông trầm */
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.7), 2px 2px 4px rgba(92, 84, 74, 0.4); /* Đổ bóng cổ điển */
             letter-spacing:0.6px;
         }
         header .dec{
-            width:64px;height:64px;opacity:0.9;background:transparent;
+            width:64px;height:64px;opacity:0.9;background:transparent; /* Giữ nền trong suốt */
             display:flex;align-items:center;justify-content:center;
             color:var(--accent);font-size:20px;
+            /* Thêm style cho nút */
+            border: none; cursor: pointer; padding: 0;
         }
+        header .dec:hover { color: #5f8a52; }
 
         /* Carousel */
         .hero{
@@ -72,13 +89,13 @@
             overflow:hidden;
             border-radius:16px;
             box-shadow: var(--shadow);
-            position:relative;
-            background:linear-gradient(180deg,#efe8dc,#fff);
+            position:relative; /* Giữ nguyên định vị tương đối */
+            background:linear-gradient(180deg,#F0EBE4,#FFFCF7); /* Điều chỉnh gradient carousel theo màu mới */
         }
         .slides{
             display:flex;
-            height:100%;
-            transition: transform 700ms ease;
+            height:100%; /* Giữ nguyên chiều cao */
+            transition: transform 700ms ease; /* Điều chỉnh tốc độ chuyển slide mượt mà hơn */
             will-change: transform;
         }
         .slide{
@@ -124,19 +141,102 @@
         /* Tabs menu */
         nav.tabs{
             margin:18px auto 6px;
-            max-width:1100px;
-            display:flex;
-            gap:8px;flex-wrap:wrap;
-            padding:8px;
+            max-width: 1100px; /* Giới hạn chiều rộng */
+            display: flex; /* Sử dụng Flexbox */
+            justify-content: center; /* Căn giữa các tab */
+            gap: 70px; /* Tăng khoảng cách giữa các tab cho rộng hơn */
+            flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+            padding: 8px; /* Padding xung quanh các tab */
+            position: relative; /* Cần thiết để định vị gạch chân */
+            border-bottom: 1px solid #e0e0e0; /* Đường viền mờ phía dưới */
+            /* Định nghĩa biến CSS cho vị trí và chiều rộng của gạch chân */
+            --underline-left: 0px;
+            --underline-width: 0px;
+        }
+        nav.tabs::after {
+            content: '';
+            position: absolute;
+            left: var(--underline-left); /* Sử dụng biến CSS cho vị trí ngang */
+            width: var(--underline-width); /* Sử dụng biến CSS cho chiều rộng */
+            bottom: -1px; /* Nằm ngay trên đường border-bottom */
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+            /* Hiệu ứng chuyển động nảy và mượt mà hơn */
+            transition: left 400ms cubic-bezier(0.68, -0.55, 0.27, 1.55), width 400ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
         nav.tabs button{
-            background:var(--glass);
-            border:1px solid rgba(0,0,0,0.06);
-            padding:10px 14px;border-radius:12px;
-            cursor:pointer;font-weight:600;color:#333;
-            transition:all 180ms;
+            background: transparent; /* Bỏ nền */
+            border: none; /* Bỏ viền */
+            padding: 10px 4px; /* Điều chỉnh padding */
+            cursor: pointer;
+            font-family: "Dancing Script", cursive; /* Áp dụng font viết tay */
+            font-size: 22px;
+            font-weight: 700; /* Tăng độ đậm */
+            color: #555; /* Màu chữ mặc định */
+            transition: transform 200ms ease, color 200ms ease; /* Hiệu ứng khi hover */
+            position: relative; /* Cần thiết để định vị pseudo-element cho dấu gạch */
         }
-        nav.tabs button.active{background:var(--accent);color:#fff;transform:translateY(-3px)}
+        /* Dấu gạch phân cách giữa các tab */
+        nav.tabs button:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -35px; /* Nửa khoảng cách gap (70px / 2) */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%; /* Chiều cao của dấu gạch */
+            background-color: #ccc; /* Màu của dấu gạch */
+        }
+        nav.tabs button:hover { transform: scale(1.05); color: var(--accent); }
+        nav.tabs button.active{ color: var(--accent); /* Màu chữ cho tab active */ transform: scale(1.05); }
+        /* Style cho các tab chưa hoàn thiện */
+        nav.tabs button.incomplete { color: #c98a8a; }
+        nav.tabs button.incomplete:hover { text-decoration: line-through; color: #e57373; }
+        nav.tabs button.incomplete.active { color: #e57373; }
+
+        /* Style cho các tab đã hoàn thiện */
+        nav.tabs button.complete { color: #7aa26b; }
+        nav.tabs button.complete:hover {
+            color: #6a8f5c; /* Màu xanh đậm hơn, dễ nhìn hơn */
+            cursor: pointer; /* Đổi con trỏ chuột */
+        }
+        nav.tabs button.complete.active { color: #6a8f5c; }
+
+        /* Thêm hiệu ứng pháo hoa cho các tab hoàn thiện */
+        nav.tabs button.complete::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            pointer-events: none; /* Không ảnh hưởng đến khả năng nhấp */
+            transition: opacity 0.3s ease;
+        }
+        /* Hiệu ứng hạt cho tab hover */
+        .tab-particle {
+            position: fixed;
+            z-index: 100;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-fade-out 0.7s forwards;
+        }
+        @keyframes particle-fade-out {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0) var(--transform-end);
+            }
+        }
+
+
         .content{
             max-width:1100px;margin:12px auto;padding:18px;background:transparent;
         }
@@ -147,18 +247,32 @@
         .intro{
             display:flex;gap:18px;align-items:center;
             background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+            background:linear-gradient(180deg, rgba(255,252,247,0.6), rgba(255,252,247,0.4)); /* Điều chỉnh gradient intro theo màu mới */
             padding:16px;border-radius:12px;box-shadow:var(--shadow);
         }
         .intro img{width:220px;height:140px;object-fit:cover;border-radius:10px}
         .intro .txt{flex:1;color:#333}
 
         /* Menu grid */
-        .searchbar{display:flex;gap:10px;align-items:center;margin:10px 0}
-        .searchbar input{
-            flex:1;padding:10px 12px;border-radius:10px;border:1px solid #e3e3e3;background:#fff;
+        .searchbar {
+            display: flex;
+            justify-content: center; /* Căn giữa thanh tìm kiếm */
+            margin: 10px 0 20px; /* Thêm khoảng cách trên dưới */
         }
-        .grid{
-            display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:12px;
+        #search {
+            width: 100%;
+            max-width: 500px; /* Giới hạn chiều dài của thanh tìm kiếm */
+            padding: 12px 20px; /* Tăng padding cho cao hơn */
+            border-radius: 999px; /* Bo góc tròn */
+            border: 1px solid #DCD3C9; /* Viền màu nhạt, hợp tông */
+            background-color: var(--card);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        #search:focus { outline: none; border-color: var(--accent); box-shadow: 0 4px 12px rgba(160, 144, 125, 0.2); }
+        .grid{ /* Giữ nguyên bố cục grid */
+            display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:12px; /* Đảm bảo responsive */
         }
         .card{
             background:var(--card);border-radius:12px;padding:10px;box-shadow:var(--shadow);
@@ -170,26 +284,44 @@
         .card .imgwrap{
             height:140px;border-radius:10px;overflow:hidden;
         }
-        .card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 300ms}
+        .card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 300ms} /* Giữ nguyên style ảnh */
         .card:hover img{transform:scale(1.1)} /* zoom 10% on hover */
-        .card h3{margin:0;font-size:16px;color:#2c3b2b}
+        .card h3{margin:0;font-size:16px;color:#5C544A} /* Màu tiêu đề thẻ theo tông trầm */
         .card p{margin:0;color:#566;flex:1;font-size:13px}
 
         /* modal */
         .modal{
             position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-            background:rgba(0,0,0,0.4);z-index:50;padding:20px;
+            background:rgba(0,0,0,0.0); /* Bắt đầu với nền trong suốt */
+            z-index:50;padding:20px;
+            /* Thay đổi cách ẩn/hiện để có transition */
+            display: flex;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 400ms var(--transition), visibility 400ms var(--transition), background-color 400ms var(--transition);
         }
-        .modal.active{display:flex}
+        .modal.active{
+            visibility: visible;
+            opacity: 1;
+            background:rgba(0,0,0,0.4); /* Nền mờ khi active */
+        }
         .dialog{
             width:100%;max-width:820px;background:#fff;border-radius:14px;padding:18px;box-shadow:0 18px 60px rgba(0,0,0,0.3);
             max-height:90vh;overflow:auto;
+            /* Hiệu ứng lướt từ dưới lên với hiệu ứng nảy */
+            transform: translateY(100vh) rotate(3deg);
+            opacity: 0;
+            transition: transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 400ms ease-out;
+        }
+        .modal.active .dialog {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
         }
         .dialog .top{display:flex;gap:14px}
         .dialog .top img{width:260px;height:160px;object-fit:cover;border-radius:10px}
         .dialog h2{margin:0 0 6px}
         .variants, .toppings{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-        .chip{background:#f2f7ef;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.04);font-size:13px}
+        .chip{background:#E9E5DF;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.04);font-size:13px} /* Màu chip theo tông mới */
         .chip-preview{
             position:absolute;
             bottom:calc(100% + 8px);
@@ -205,15 +337,15 @@
         }
         .comments{
             margin-top:14px;border-radius:10px;padding:10px;background:#fafafa;border:1px solid #eee;
-            max-height:180px;overflow:auto;
+            max-height:180px;overflow:auto; background: var(--muted);
         }
         .cmt{padding:8px;border-bottom:1px dashed rgba(0,0,0,0.04);font-size:14px}
         .cmt:last-child{border-bottom:0}
         .comment-preview{ display:flex; align-items:center; gap:10px; margin-top:8px; }
         .comment-preview .cavatar{
             width:44px; height:44px; min-width:44px; border-radius:50%;
-            background:linear-gradient(180deg,var(--accent), #5f9b6a);
-            color:#fff; display:grid; place-items:center; font-weight:700; font-size:16px;
+            background:linear-gradient(180deg,var(--accent), #6A6052); /* Gradient avatar theo màu accent mới */
+            color:#fff; display:grid; place-items:center; font-weight:700; font-size:16px; /* Giữ màu chữ trắng */
             box-shadow:var(--shadow);
         }
         .comment-preview .cmeta{ flex:1; background:#fff; padding:8px 10px; border-radius:8px; box-shadow:var(--shadow); font-size:13px; color:#333; }
@@ -245,23 +377,296 @@
         .slides, .slide, .slide img{ user-select:none; -webkit-user-select:none; -ms-user-select:none; -webkit-user-drag:none; }
         .carousel.grabbing{ cursor:grabbing; }
 
+        /* Add/Edit Dish Features */
+        #addDishBtn {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 56px; height: 56px; background: var(--accent); color: white;
+            border: none; border-radius: 50%; font-size: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer;
+            display: none; align-items: center; justify-content: center;
+            z-index: 40; transition: transform 0.2s, background 0.2s;
+        }
+        #addDishBtn:hover { transform: scale(1.05); background: #6a8f5c; }
+        #addDishBtn.visible { display: flex; }
+        .form-section { margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+        .form-section h4 { margin: 0 0 10px; color: #5C544A; }
+        .dynamic-item { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; background: #fdfdfd; }
+        .dynamic-item-header { display: flex; justify-content: space-between; align-items: center; }
+        .dynamic-item-header input { flex: 1; }
+        .image-input-group { display: flex; gap: 8px; align-items: center; }
+        .image-input-group input[type="text"] { flex: 1; }
+        .image-input-group .file-label { padding: 6px 10px; background: #eee; border-radius: 6px; cursor: pointer; font-size: 12px; white-space: nowrap; }
+        .btn-remove, .btn-add { padding: 5px 10px; font-size: 12px; cursor: pointer; border-radius: 6px; border: 1px solid #ccc; background: #f0f0f0; }
+        .btn-remove { background: #fbebeb; border-color: #f4c7c7; color: #c72e2e; }
+        .dialog-footer { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-submit { background-color: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+        .btn-secondary { background: #e0e0e0; color: #333; }
+        #editDishBtn { background: transparent; border: none; cursor: pointer; font-size: 18px; padding: 4px; margin-left: 8px; color: #555; }
+        #editDishBtn:hover { color: var(--accent); }
+        .image-preview { width: 60px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; background: #f5f5f5; }
+
         @media (max-width:700px){
+            #addDishBtn { bottom: 70px; right: 15px; }
             .intro{flex-direction:column}
             .dialog .top{flex-direction:column}
             .dialog .top img{width:100%;height:200px}
             h1{font-size:22px}
             .carousel{height:240px}
         }
+        /* Fireworks Effect */
+        #fireworksOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+        #fireworksOverlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #fireworksContainer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .firework-rocket {
+            position: absolute;
+            width: 4px;
+            height: 15px;
+            background-color: white;
+            border-radius: 2px;
+            opacity: 0;
+            animation: launchRocket var(--rocket-duration, 1.5s) ease-out forwards;
+            transform-origin: bottom center;
+        }
+
+        @keyframes launchRocket {
+            0% {
+                opacity: 0;
+                transform: translateY(0); /* Relative to its initial 'top' position */
+            }
+            10% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(var(--rocket-travel-distance)); /* Custom property for total travel distance */
+            }
+            100% {
+                opacity: 0; /* Fade out before explosion */
+                transform: translateY(var(--rocket-travel-distance));
+            }
+        }
+
+        .firework-spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkExplode var(--spark-duration, 1.5s) ease-out forwards;
+        }
+
+        @keyframes sparkExplode {
+            0% {
+                opacity: 0;
+                transform: scale(0); /* Start small and invisible */
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.2) translate(var(--spark-dx), var(--spark-dy)); /* Shrink, fade, and move outwards */
+                filter: hue-rotate(360deg); /* Color changing effect */
+            }
+        }
+        @keyframes sparkFall {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1) translate(var(--spark-dx), var(--spark-dy));
+            }
+            to {
+                opacity: 0;
+                /* Rơi xuống dưới tác động của trọng lực */
+                transform: scale(0.2) translate(calc(var(--spark-dx) * 1.2), calc(var(--spark-dy) * 1.2 + 200px));
+                filter: hue-rotate(360deg);
+            }
+        }
+        @keyframes sparkCrackle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5); /* Nhanh chóng lóe sáng và tắt */
+            }
+        }
+
+        /* Review Section */
+        .review-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+            align-items: center;
+            gap: 10px;
+        }
+        #reviewSort {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #DCD3C9;
+            background-color: var(--card);
+            font-family: "Nunito", sans-serif;
+            font-size: 14px;
+        }
+        .review-card {
+            display: flex; align-items: center; gap: 16px;
+            background: var(--card); padding: 12px; border-radius: 12px;
+            box-shadow: var(--shadow); margin-bottom: 12px; cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .review-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; }
+        .review-card .info { flex: 1; }
+        .review-card .info h4 { margin: 0 0 4px; font-size: 18px; color: #5C544A; }
+        .review-card .rating-display { text-align: right; }
+        .review-card .stars { font-size: 20px; color: #f5a623; letter-spacing: 2px; }
+        .review-card .score { font-size: 14px; color: #777; font-weight: 600; }
+
+        /* Order Tab */
+        .order-card {
+            background: var(--card); border-radius: 12px; padding: 10px;
+            box-shadow: var(--shadow); display: flex; flex-direction: column;
+            gap: 10px; text-align: center;
+        }
+        .order-card .imgwrap { height: 140px; border-radius: 10px; overflow: hidden; }
+        .order-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .order-card h4 { margin: 5px 0; font-size: 17px; color: #5C544A; }
+        .order-card .rating { font-size: 14px; color: #f5a623; font-weight: 600; }
+        .order-card .btn-add-cart {
+            margin-top: auto; padding: 8px 12px; border: none;
+            background-color: var(--accent); color: white;
+            border-radius: 8px; cursor: pointer; font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .order-card .btn-add-cart:hover { background-color: #8a7c6c; }
+        .order-title {
+            text-align: center; font-family: 'Dancing Script', cursive;
+            font-size: 32px; color: #5C544A; margin-bottom: 5px;
+        }
+        .order-subtitle { text-align: center; color: #777; margin-top: 0; margin-bottom: 25px; }
+
+        /* Development Notice */
+        .development-notice {
+            padding: 40px 20px;
+            text-align: center;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px dashed #e0d5c8;
+        }
+        .development-notice h3 { font-family: 'Dancing Script', cursive; font-size: 36px; color: #e57373; margin: 0 0 10px; }
+        .development-notice p { color: #666; line-height: 1.7; max-width: 600px; margin: 0 auto; }
+        .development-notice a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+
+        /* Review Submission Form */
+        #newReviewForm .form-group { margin-bottom: 15px; }
+        #newReviewForm label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; }
+        #newReviewForm input[type="text"],
+        #newReviewForm select,
+        #newReviewForm textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #DCD3C9;
+            background-color: #fff;
+            font-size: 15px;
+            font-family: "Nunito", sans-serif;
+        }
+        .star-rating-input {
+            display: flex;
+            flex-direction: row-reverse; /* Đảo ngược để CSS :hover ~ hoạt động đúng */
+            justify-content: flex-end;
+            font-size: 28px;
+            color: #ccc;
+            cursor: pointer;
+        }
+        .star-rating-input > span { transition: color 0.2s; }
+        .star-rating-input > span:hover,
+        .star-rating-input > span:hover ~ span { color: #f5a623; }
+        .star-rating-input > span.selected,
+        .star-rating-input > span.selected ~ span { color: #f5a623; }
+        .review-form-container {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 1px solid #eee;
+        }
+        .review-form-container h4 {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            color: #5C544A;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        #newReviewForm .form-group { margin-bottom: 15px; }
+        #newReviewForm label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; }
+        #newReviewForm input[type="text"],
+        #newReviewForm select,
+        #newReviewForm textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #DCD3C9;
+            background-color: #fff;
+            font-size: 15px;
+            font-family: "Nunito", sans-serif;
+        }
+        .star-rating-input {
+            display: flex;
+            flex-direction: row-reverse; /* Đảo ngược để CSS :hover ~ hoạt động đúng */
+            justify-content: flex-end;
+            font-size: 28px;
+            color: #ccc;
+            cursor: pointer;
+        }
+        .star-rating-input > span { transition: color 0.2s; }
+        .star-rating-input > span:hover,
+        .star-rating-input > span:hover ~ span { color: #f5a623; }
+        .star-rating-input > span.selected,
+        .star-rating-input > span.selected ~ span { color: #f5a623; }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
+        <div class="logo" id="headerLogo">
             <img src="images/logo/logo.png" alt="logo">
         </div>
         <h1>Ẩm thực Việt Nam</h1>
-        <div class="dec" title="Trang trí">🏯</div>
+        <button id="devInfoBtn" class="dec" title="Thông tin nhà phát triển">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 6.5L21 12l-6.5 2.5L12 22l-2.5-6.5L3 12l6.5-2.5L12 2z"></path></svg>
+        </button>
     </header>
+
+    <div id="fireworksOverlay"></div>
+    <audio id="fireworksAudio" src="audio/phaohoa.mp3" preload="auto"></audio>
+    <div id="fireworksContainer"></div>
 
     <section class="hero">
         <div class="carousel reveal" id="carousel">
@@ -273,6 +678,10 @@
                 <div class="slide"><img src="images/Banner/banner-slide-5.jpg" alt></div>
                 <div class="slide"><img src="images/Banner/banner-slide-6.jpg" alt></div>
                 <div class="slide"><img src="images/Banner/banner-slide-7.jpg" alt></div>
+                <div class="slide"><img src="images/Banner/banner-slide-8.jpg" alt></div>
+                <div class="slide"><img src="images/Banner/banner-slide-9.jpg" alt></div>
+                <div class="slide"><img src="images/Banner/banner-slide-10.jpg" alt></div>
+                <div class="slide"><img src="images/Banner/banner-slide-11.jpg" alt></div>
             </div>
 
             <div class="carousel-controls">
@@ -286,12 +695,12 @@
     </section>
 
     <nav class="tabs" role="tablist" aria-label="Main menu">
-        <button class="tab-btn active" data-target="intro">Giới thiệu</button>
-        <button class="tab-btn" data-target="menu">Thực đơn</button>
-        <button class="tab-btn" data-target="reviews">Đánh giá</button>
-        <button class="tab-btn" data-target="order">Đặt hàng</button>
-        <button class="tab-btn" data-target="contact">Liên hệ</button>
-        <button class="tab-btn" data-target="support">Hỗ trợ</button>
+        <button class="tab-btn complete active" data-target="intro" role="tab" aria-selected="true">Giới thiệu</button>
+        <button class="tab-btn complete" data-target="menu">Thực đơn</button>
+        <button class="tab-btn complete" data-target="reviews">Đánh giá</button>
+        <button class="tab-btn incomplete" data-target="order">Đặt hàng</button>
+        <button class="tab-btn incomplete" data-target="contact">Liên hệ</button>
+        <button class="tab-btn incomplete" data-target="support">Hỗ trợ</button>
     </nav>
 
     <main class="content">
@@ -343,10 +752,7 @@
 
         <section id="menu" class="pane">
             <div style="display:flex;flex-direction:column">
-                <div class="searchbar">
-                    <input id="search" placeholder="Tìm món (ví dụ: Phở, Bánh Mì...)">
-                    <div style="width:130px;text-align:right;color:#666;font-size:14px">Kéo để xem thêm</div>
-                </div>
+                <div class="searchbar"><input id="search" placeholder="Tìm món ăn bạn yêu thích..."></div>
 
                 <div class="grid" id="menuGrid">
                 </div>
@@ -356,19 +762,63 @@
         <section id="reviews" class="pane">
             <h3>Đánh giá người dùng</h3>
             <div class="review-list" id="reviewList">
+            <div class="review-controls">
+                <label for="reviewSort" style="font-weight: 600; color: #555;">Sắp xếp theo:</label>
+                <select id="reviewSort">
+                    <option value="desc">Đánh giá: Cao đến Thấp</option>
+                    <option value="asc">Đánh giá: Thấp đến Cao</option>
+                </select>
+            </div>
+            <div id="reviewList">
+                <!-- Các thẻ đánh giá sẽ được render vào đây -->
+            </div>
+
+            <div class="review-form-container">
+                <h4>Gửi đánh giá của bạn</h4>
+                <form id="newReviewForm">
+                    <div class="form-group">
+                        <label for="reviewDishSelect">Chọn món ăn:</label>
+                        <select id="reviewDishSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewerNameInput">Tên của bạn:</label>
+                        <input type="text" id="reviewerNameInput" placeholder="Nhập tên của bạn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Đánh giá (sao):</label>
+                        <div class="star-rating-input" id="starRatingInput">
+                            <span data-value="5">☆</span><span data-value="4">☆</span><span data-value="3">☆</span><span data-value="2">☆</span><span data-value="1">☆</span>
+                        </div>
+                        <input type="hidden" id="reviewRatingInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewCommentInput">Bình luận:</label>
+                        <textarea id="reviewCommentInput" rows="4" placeholder="Chia sẻ cảm nhận của bạn về món ăn..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" style="width: 100%; padding: 12px;">Gửi đánh giá</button>
+                </form>
             </div>
         </section>
 
         <section id="order" class="pane">
-            <div class="coming">Đang trong quá trình hoàn thiện, xin thông cảm.</div>
+            <div class="development-notice">
+                <h3>ĐANG PHÁT TRIỂN</h3>
+                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+            </div>
         </section>
 
         <section id="contact" class="pane">
-            <div class="coming">Đang trong quá trình hoàn thiện, xin thông cảm.</div>
+            <div class="development-notice">
+                <h3>ĐANG PHÁT TRIỂN</h3>
+                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+            </div>
         </section>
 
         <section id="support" class="pane">
-            <div class="coming">Đang trong quá trình hoàn thiện, xin thông cảm.</div>
+            <div class="development-notice">
+                <h3>ĐANG PHÁT TRIỂN</h3>
+                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+            </div>
         </section>
     </main>
 
@@ -376,8 +826,11 @@
         <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
             <div style="display:flex;justify-content:space-between;align-items:center">
                 <div>
-                    <h2 id="dlgTitle">Tên món</h2>
-                    <div id="dlgRating" style="color:#f5a623;font-weight:700;margin-top:4px"></div>
+                    <div style="display:flex; align-items:center;">
+                        <h2 id="dlgTitle">Tên món</h2>
+                        <button id="editDishBtn" title="Chỉnh sửa món ăn">✏️</button>
+                    </div>
+                    <div id="dlgRating" style="color:#f5a623;font-weight:700;margin-top:-2px"></div>
                 </div>
                 <button id="closeDlg" style="background:transparent;border:0;font-size:20px;cursor:pointer">✕</button>
             </div>
@@ -397,10 +850,216 @@
             <div style="margin-top:12px;font-weight:700">Bình luận tiêu biểu</div>
             <div class="comments" id="dlgComments">
             </div>
+            <div class="dialog-footer" style="margin-top:16px; justify-content:space-between;">
+                 <button id="deleteDishBtn" class="btn-submit" style="background:#d9534f">Xóa món</button>
+                 <div><!-- placeholder --></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer Info Modal -->
+    <div class="modal" id="developerInfoModal">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="developerInfoTitle">
+            <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom: 15px;">
+                <h2 id="developerInfoTitle" style="margin:0;">Thông tin nhóm phát triển</h2>
+                <button type="button" class="close-developer-modal" style="background:transparent;border:0;font-size:20px;cursor:pointer">✕</button>
+            </div>
+            <div style="text-align: center; padding: 20px;">
+                <img src="images/logo/logo.png" alt="Logo Ẩm thực Việt Nam" style="width: 120px; height: 120px; border-radius: 15px; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: var(--shadow);">
+                <h3 style="margin: 10px 0;">Nhóm Phát Triển "Bếp Việt"</h3>
+                <p style="color:#555; margin: 5px 0;">Nguyễn Thành Nam - Leader</p>
+                <p style="color:#555; margin: 5px 0;">Lê Bá Phúc</p>
+                <p style="color:#555; margin: 5px 0;">Nguyễn Thị Thanh Bình</p>
+                <p style="color:#555; margin: 5px 0;">Phạm Hoàng Như Quỳnh</p>
+                <p style="color:#555; margin: 5px 0;">Nguyễn Ngọc Thảo Linh</p>
+                <p style="color:#555; margin: 5px 0;">Thái Hoàng Bảo Ngọc</p>
+                <p style="color:#777; font-size: 14px; margin-top: 20px; line-height: 1.6;">
+                    Dự án này được xây dựng với niềm đam mê ẩm thực Việt Nam và mong muốn mang những giá trị văn hóa đặc sắc đến gần hơn với mọi người.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button id="addDishBtn" title="Thêm món ăn mới">+</button>
+
+    <div class="modal" id="dishFormModal">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dishFormTitle">
+            <form id="dishForm">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <h2 id="dishFormTitle">Thêm Món Ăn Mới</h2>
+                    <button type="button" class="close-form-modal" style="background:transparent;border:0;font-size:20px;cursor:pointer">✕</button>
+                </div>
+                <input type="hidden" id="dishIdInput">
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:15px;">
+                    <input type="text" class="form-input" id="dishNameInput" placeholder="Tên món ăn" required>
+                    <textarea id="dishDescInput" class="form-input" placeholder="Mô tả món ăn" rows="3" required></textarea>
+                    <div class="image-input-group">
+                        <input type="text" class="form-input" id="dishImgInput" placeholder="URL hình ảnh chính">
+                        <label class="file-label">Chọn file<input type="file" class="file-input" accept="image/*" style="display:none;"></label>
+                        <img class="image-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Biến tấu</h4>
+                    <div id="variantsContainer"></div>
+                    <button type="button" class="btn-add" id="addVariantBtn">Thêm biến tấu</button>
+                </div>
+
+                <div class="form-section">
+                    <h4>Topping / Thêm</h4>
+                    <div id="toppingsContainer"></div>
+                    <button type="button" class="btn-add" id="addToppingBtn">Thêm topping</button>
+                </div>
+
+                <div class="dialog-footer">
+                    <button type="button" class="btn-submit btn-secondary close-form-modal">Hủy</button>
+                    <button type="submit" class="btn-submit">Lưu Món Ăn</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
+        // --- Developer Info Modal Logic ---
+        const headerLogo = document.getElementById('headerLogo');
+        const developerInfoModal = document.getElementById('developerInfoModal');
+        const devInfoBtn = document.getElementById('devInfoBtn');
+        const closeDeveloperModalBtns = developerInfoModal.querySelectorAll('.close-developer-modal');
+
+        // --- Fireworks Logic (Corrected) ---
+        const fireworksContainer = document.getElementById('fireworksContainer');
+        const fireworksOverlay = document.getElementById('fireworksOverlay');
+        const fireworksAudio = document.getElementById('fireworksAudio');
+
+        let fireworkLaunchInterval;
+        let isFireworksActive = false;
+
+        function createSpark(x, y, color, delay, type = 'burst') {
+            const spark = document.createElement('div');
+            spark.className = 'firework-spark';
+            spark.style.left = `${x}px`;
+            spark.style.top = `${y}px`;
+            spark.style.backgroundColor = color;
+            spark.style.animationDelay = `${delay}s`;
+
+            if (type === 'willow') {
+                spark.style.animationName = 'sparkFall';
+                spark.style.setProperty('--spark-duration', `${Math.random() * 0.8 + 1.8}s`); // Rơi lâu hơn
+            } else if (type === 'crackle') {
+                spark.style.animationName = 'sparkCrackle';
+                spark.style.setProperty('--spark-duration', `${Math.random() * 0.3 + 0.2}s`); // Nổ nhanh
+            } else { // burst
+                spark.style.animationName = 'sparkExplode';
+                spark.style.setProperty('--spark-duration', `${Math.random() * 0.5 + 1.2}s`);
+            }
+
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * (Math.min(window.innerWidth, window.innerHeight) / 2.5); // Bán kính lớn
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance;
+
+            spark.style.setProperty('--spark-dx', `${dx}px`);
+            spark.style.setProperty('--spark-dy', `${dy}px`);
+
+            fireworksContainer.appendChild(spark);
+
+            spark.addEventListener('animationend', () => spark.remove());
+        }
+
+        function launchSingleFirework() {
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight;
+            const peakY = Math.random() * (window.innerHeight * 0.6) + (window.innerHeight * 0.1);
+            const rocketTravelDistance = peakY - startY;
+
+            const rocket = document.createElement('div');
+            rocket.className = 'firework-rocket';
+            rocket.style.left = `${startX}px`;
+            rocket.style.top = `${startY}px`;
+            rocket.style.setProperty('--rocket-travel-distance', `${rocketTravelDistance}px`);
+            rocket.style.setProperty('--rocket-duration', `${Math.random() * 0.5 + 1.2}s`);
+
+            fireworksContainer.appendChild(rocket);
+
+            if (fireworksAudio && (fireworksAudio.paused || fireworksAudio.ended)) {
+                fireworksAudio.currentTime = 0;
+                fireworksAudio.play().catch(e => console.error("Lỗi khi phát âm thanh:", e));
+            }
+
+            rocket.addEventListener('animationend', () => {
+                rocket.remove();
+                
+                const fireworkTypes = ['burst', 'willow', 'crackle_burst'];
+                const type = fireworkTypes[Math.floor(Math.random() * fireworkTypes.length)];
+
+                const baseHue = Math.random() * 360;
+
+                if (type === 'crackle_burst') {
+                    const mainSparkCount = Math.floor(Math.random() * 50) + 80; // 80-130 hạt chính
+                    for (let i = 0; i < mainSparkCount; i++) {
+                        const hue = (baseHue + Math.random() * 60 - 30) % 360;
+                        const color = `hsl(${hue}, 90%, 70%)`;
+                        const mainSparkDelay = Math.random() * 0.3;
+                        createSpark(startX, peakY, color, mainSparkDelay, 'burst');
+
+                        // Tạo các hạt nổ lách tách xung quanh hạt chính
+                        const crackleCount = Math.floor(Math.random() * 3) + 2; // 2-4 hạt lách tách cho mỗi hạt chính
+                        for (let j = 0; j < crackleCount; j++) {
+                            createSpark(startX, peakY, 'white', mainSparkDelay + Math.random() * 0.5 + 0.3, 'crackle');
+                        }
+                    }
+                } else { // burst or willow
+                    const sparkCount = (type === 'willow') ? (Math.floor(Math.random() * 80) + 100) : (Math.floor(Math.random() * 100) + 200); // Nhiều hạt hơn
+                    for (let i = 0; i < sparkCount; i++) {
+                        const color = `hsl(${(baseHue + Math.random() * 120 - 60) % 360}, 90%, 70%)`;
+                        createSpark(startX, peakY, color, Math.random() * 0.5, type);
+                    }
+                }
+            });
+        }
+
+        function startFireworks() {
+            if (isFireworksActive) return;
+            isFireworksActive = true;
+            fireworksOverlay.classList.add('active');
+            fireworksContainer.innerHTML = '';
+            launchSingleFirework();
+            fireworkLaunchInterval = setInterval(launchSingleFirework, 1000);
+        }
+
+        function stopFireworks() {
+            if (!isFireworksActive) return;
+            isFireworksActive = false;
+            clearInterval(fireworkLaunchInterval);
+            fireworksOverlay.classList.remove('active');
+            if (fireworksAudio) {
+                fireworksAudio.pause();
+                fireworksAudio.currentTime = 0;
+            }
+        }
+
+        headerLogo.addEventListener('click', () => {
+            developerInfoModal.classList.add('active');
+        });
+
+        devInfoBtn.addEventListener('click', () => {
+            if (isFireworksActive) {
+                stopFireworks();
+            } else {
+                startFireworks();
+            }
+        });
+
+        closeDeveloperModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                developerInfoModal.classList.remove('active');
+            });
+        });
+
+        developerInfoModal.addEventListener('click', (e) => { if (e.target === developerInfoModal) developerInfoModal.classList.remove('active'); });
+        fireworksOverlay.addEventListener('click', stopFireworks);
+
         const dishes = [
             { id:1, name:"Phở", img:"images/Menu/Pho/pho.jpg", desc:"Phở (chữ Nôm: 𬖾) là một món ăn truyền thống của Việt Nam, được xem là một trong những món ăn tiêu biểu cho nền ẩm thực Việt Nam.", variants:[{name:"Phở tái nạm", img:"images/Menu/Pho/photainam.jpg"},{name:"Phở gà", img:"images/Menu/Pho/phoga.jpg"},{name:"Phở gầu", img:"images/Menu/Pho/phogau.jpg"}], toppings:[{name:"Chanh", img:"images/Menu/TOPPING/chanh.jpg"},{name:"Ớt", img:"images/Menu/TOPPING/ot.jpg"},{name:"Hành ngò", img:"images/Menu/TOPPING/hanhngo.jpg"},{name:"Quẩy", img:"images/Menu/TOPPING/quay.jpg"}], comments:[
                 {name:"Lan", text:"Ngon chuẩn vị!", rating:5},
@@ -429,6 +1088,13 @@
                 {name:"Hà", text:"Món khai vị tuyệt.", rating:5},
                 {name:"Thanh", text:"Phù hợp mọi lứa tuổi.", rating:4}
             ], rating:4.3},
+            { id:5, name:"Gỏi cuốn", img:"images/Menu/Goicuon/img.jpg", desc:"Gỏi cuốn (còn gọi là nem cuốn, salad roll, summer roll hay fresh spring roll) là một món ăn truyền thống của Việt Nam, bao gồm các nguyên liệu như tôm, thịt lợn, bún, rau sống và các loại thảo mộc được cuộn trong bánh tráng mỏng. Món ăn này thường được chấm với nước mắm pha chua ngọt hoặc tương đậu phộng.", variants:[{name:"Gỏi cuốn tôm thịt", img:"images/Menu/Goicuon/goicuontomthit.jpg"},{name:"Gỏi cuốn chay", img:"images/Menu/Goicuon/goicuonchay.jpg"}], toppings:[{name:"Tương đậu phộng", img:"images/Menu/TOPPING/tuongdauphong.jpg"},{name:"Ớt", img:"images/Menu/TOPPING/ot.jpg"},{name:"Lạc rang", img:"images/Menu/TOPPING/dauphongrang.jpg"}], comments:[
+                {name:"Hải", text:"Tươi ngon, dễ ăn.", rating:5},
+                {name:"Phương", text:"Nước chấm đậm đà.", rating:4},
+                {name:"Vy", text:"Rau sống phong phú.", rating:4},
+                {name:"Quân", text:"Phù hợp cho bữa nhẹ.", rating:5},
+                {name:"Lan", text:"Sẽ quay lại thưởng thức.", rating:4}
+            ], rating:4.4},
             { id:6, name:"Bún bò Huế", img:"images/Menu/BunboHue/bunbohue.jpg", desc:"Bún bò Huế là một trong những đặc sản của thành phố Huế, mặc dù món bún này phổ biến trên cả ba miền ở Việt Nam và cả người Việt tại hải ngoại. Tại Thừa Thiên Huế, món này được gọi đơn giản là bún bò hoặc gọi cụ thể hơn là bún bò thịt bò. Các địa phương khác gọi là bún bò Huế, bún bò gốc Huế để chỉ xuất xứ của món ăn này.", variants:[{name:"Bún bò tái", img:"images/Menu/BunboHue/bunbotai.jpg"},{name:"Bún bò chay", img:"images/Menu/BunboHue/bunbochay.jpg"}], toppings:[{name:"Huyết", img:"images/Menu/TOPPING/Huyet.jpg"},{name:"Hành lá", img:"images/Menu/TOPPING/hanhla.jpg"},{name:"Ớt", img:"images/Menu/TOPPING/ot.jpg"}], comments:[
                 {name:"Huệ", text:"Vị cay chuẩn Huế.", rating:5},
                 {name:"Long", text:"Nước dùng đậm đà.", rating:4},
@@ -449,8 +1115,84 @@
                 {name:"Minh", text:"Phù hợp ăn tối.", rating:4},
                 {name:"Kiệt", text:"Khá hợp vị.", rating:4},
                 {name:"Bảo", text:"Ăn nóng ngon nhất.", rating:5}
+            ], rating:4.5},
+            { id:9, name:"Chè Ba Màu", img:"images/Menu/chebamau/img.jpg", desc:"Chè ba màu là một món tráng miệng truyền thống của Việt Nam, nổi bật với sự kết hợp hài hòa của ba lớp màu sắc khác nhau, mỗi lớp mang một hương vị và thành phần riêng biệt. Món chè này không chỉ hấp dẫn bởi vẻ ngoài bắt mắt mà còn bởi sự pha trộn tinh tế giữa các nguyên liệu, tạo nên một trải nghiệm ẩm thực độc đáo và thú vị.", variants:[{name:"Chè ba màu truyền thống", img:"images/Menu/chebamau/chebamau.jpg"},{name:"Chè ba màu thập cẩm", img:"images/Menu/chebamau/chebamauthapcam.jpg"}], toppings:[{name:"Dừa nạo", img:"images/Menu/TOPPING/duanao.jpg"},{name:"Đậu phộng rang", img:"images/Menu/TOPPING/dauphongrang.jpg"},{name:"Nước cốt dừa", img:"images/Menu/TOPPING/cotdua.jpg"}], comments:[
+                {name:"Ngân", text:"Mát lạnh ngày hè.", rating:5},
+                {name:"Hải", text:"Vị ngọt vừa phải.", rating:4},
+                {name:"Thảo", text:"Phục vụ nhanh.", rating:4},
+                {name:"Dũng", text:"Giá cả hợp lý.", rating:4},
+                {name:"Linh", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.6},
+            { id:10, name:"Hủ tiếu", img:"images/Menu/Hutieu/hutieu.jpg", desc:"(còn được viết là hủ tíu) là món ăn dùng chế phẩm gạo dạng sợi, có nguồn gốc từ ẩm thực Triều Châu (Trung Quốc), du nhập và phát triển mạnh mẽ ở miền Nam Việt Nam, đặc biệt là Sài Gòn và các tỉnh Đồng bằng sông Cửu Long", variants:[{name:"Hủ tiếu nam vang", img:"images/Menu/Hutieu/hutieunamvang.jpg"},{name:"Hủ tiếu khô", img:"images/Menu/Hutieu/hutieukho.jpg"}], toppings:[{name:"Tôm", img:"images/Menu/TOPPING/tom.jpg"},{name:"Thịt heo", img:"images/Menu/TOPPING/thitheo.jpg"},{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"}], comments:[
+                {name:"Vũ", text:"Nước dùng đậm đà.", rating:5},
+                {name:"Phương", text:"Sợi hủ tiếu mềm.", rating:4},
+                {name:"Quân", text:"Phục vụ nhanh.", rating:4},
+                {name:"Hạnh", text:"Giá cả hợp lý.", rating:4},
+                {name:"Tuấn", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.4},
+            { id:11, name:"Mì quảng", img:"images/Menu/Miquang/img.jpg", desc:"Mì Quảng là một món ăn đặc trưng của vùng đất Quảng Nam – Đà Nẵng, Việt Nam. Sợi mì được làm từ bột gạo, thường có màu trắng hoặc vàng (nhờ nghệ/dành dành), ăn kèm với nước dùng (nước nhưn) nấu từ tôm, thịt lợn, thịt gà... chỉ chan xăm xắp chứ không ngập như các món mì/phở khác.", variants:[{name:"Mì quảng gà", img:"images/Menu/Miquang/miquangga.jpg"},{name:"Mì quảng tôm thịt", img:"images/Menu/Miquang/miquangtomthit.jpg"}], toppings:[{name:"Bánh tráng mè", img:"images/Menu/TOPPING/banhtrang.jpg"},{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Đậu phộng rang", img:"images/Menu/TOPPING/dauphongrang.jpg"}], comments:[
+                {name:"Thanh", text:"Hương vị đậm đà.", rating:5},
+                {name:"Hải", text:"Sợi mì ngon.", rating:4},
+                {name:"Linh", text:"Phục vụ nhanh.", rating:4},
+                {name:"Dũng", text:"Giá cả hợp lý.", rating:4},
+                {name:"Ngọc", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.5},
+            { id:12, name:"bánh khọt", img:"images/Menu/banhkhot/banhkhot.jpg", desc:"Bánh khọt là loại bánh đặc trưng của miền Nam Việt Nam, nổi tiếng nhất là ở Vũng Tàu. Bánh được làm từ bột gạo (có pha nước cốt dừa), đổ trong khuôn nhỏ, chiên vàng giòn với nhân tôm (hoặc hải sản) và mỡ hành, ăn kèm với rau sống và nước mắm chua ngọt.", variants:[{name:"Bánh khọt Vũng Tàu (nhân tôm chấy hoặc tôm tươi)", img:"images/Menu/banhkhot/banhkhottom.jpg"},{name:"Bánh khọt Châu Đốc (pha nghệ)", img:"images/Menu/banhkhot/banhkhotchaudoc.jpg"}], toppings:[{name:"Nước mắm chua ngọt", img:"images/Menu/TOPPING/nuocmam.jpg"},{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Đu đủ chua ngọt", img:"images/Menu/TOPPING/dudu.jpg"}], comments:[
+                {name:"Hương", text:"Giòn tan!", rating:5},
+                {name:"Lan", text:"Tôm tươi ngon.", rating:4},
+                {name:"Khoa", text:"Phù hợp ăn nhẹ.", rating:4},
+                {name:"Tiến", text:"Nước chấm tuyệt vời.", rating:4},
+                {name:"Phương", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.6},
+            { id:13, name:"bánh đa cua", img:"images/Menu/banhdacua/banhdacua.jpg", desc:"Bánh đa cua là món ăn đặc trưng của Hải Phòng. Sợi bánh đa màu đỏ/nâu (từ mật mía hoặc gấc) dai mềm, ăn kèm với nước dùng đậm đà vị riêu cua đồng, gạch cua và các loại topping.", variants:[{name:"Bánh đa cua truyền thống", img:"images/Menu/banhdacua/banhdacuatruyenthong.jpg"},{name:"Bánh đa cua hải sản", img:"images/Menu/banhdacua/banhdacuahaisan.jpg"}], toppings:[{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Ớt", img:"images/Menu/TOPPING/ot.jpg"}], comments:[
+                {name:"Minh", text:"Nước dùng ngon.", rating:5},
+                {name:"Hà", text:"Bánh đa giòn.", rating:4},
+                {name:"An", text:"Phục vụ nhanh.", rating:4},
+                {name:"Trung", text:"Giá cả hợp lý.", rating:4},
+                {name:"Lan", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.5},
+            { id:14, name:"Cao lầu", img:"images/Menu/caolau/img.jpg", desc:"Cao lầu là món mì đặc sản của Hội An, Việt Nam, nổi bật với sợi mì dày, dai được làm từ bột gạo và nước tro từ tro củi. Món ăn này thường được phục vụ với thịt heo xá xíu, rau sống, bánh tráng nướng giòn và nước dùng đậm đà.", variants:[{name:"Cao lầu truyền thống", img:"images/Menu/caolau/caolautruyenthong.jpg"},{name:"Cao lầu chay", img:"images/Menu/caolau/caolauchay.jpg"}], toppings:[{name:"Bánh tráng nướng giòn", img:"images/Menu/TOPPING/banhtrang.jpg"},{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Đậu phộng rang", img:"images/Menu/TOPPING/dauphongrang.jpg"}], comments:[
+                {name:"Hải", text:"Sợi mì ngon.", rating:5},
+                {name:"Linh", text:"Nước dùng đậm đà.", rating:4},
+                {name:"Dũng", text:"Phục vụ nhanh.", rating:4},
+                {name:"Ngọc", text:"Giá cả hợp lý.", rating:4},
+                {name:"Thanh", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.6},
+            { id:15, name:"bánh cuốn", img:"images/Menu/banhcuon/img.jpg", desc:"Bánh cuốn là món ăn truyền thống của Việt Nam, gồm những lớp bánh mỏng được làm từ bột gạo hấp chín, cuộn với nhân thịt băm, mộc nhĩ và hành phi. Món ăn này thường được ăn kèm với nước mắm pha chua ngọt, chả lụa và rau sống.", variants:[{name:"Bánh cuốn thịt", img:"images/Menu/banhcuon/banhcuonthit.jpg"},{name:"Bánh cuốn chay", img:"images/Menu/banhcuon/banhcuonchay.jpg"}], toppings:[{name:"Chả lụa", img:"images/Menu/TOPPING/chalua.jpg"},{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Nước mắm pha", img:"images/Menu/TOPPING/nuocmam.jpg"}], comments:[
+                {name:"Thu", text:"Bánh mềm ngon.", rating:5},
+                {name:"Tú", text:"Nhân đậm đà.", rating:4},
+                {name:"Hà", text:"Phục vụ nhanh.", rating:4},
+                {name:"Thanh", text:"Giá cả hợp lý.", rating:4},
+                {name:"Bảo", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.5},
+            { id:16, name:"Bánh xèo", img:"images/Menu/banhxeo/img.jpg", desc:"Bánh xèo là món ăn truyền thống của Việt Nam, đặc biệt phổ biến ở miền Nam. Đây là loại bánh mỏng, giòn được làm từ bột gạo pha với nước cốt dừa và nghệ, sau đó chiên trên chảo với nhân gồm tôm, thịt heo, giá đỗ và hành lá. Bánh xèo thường được ăn kèm với rau sống và nước mắm chua ngọt.", variants:[{name:"Bánh xèo tôm thịt", img:"images/Menu/banhxeo/banhxeotomthit.jpg"},{name:"Bánh xèo chay", img:"images/Menu/banhxeo/banhxeochay.jpg"}], toppings:[{name:"Rau sống", img:"images/Menu/TOPPING/rauthom.jpg"},{name:"Nước mắm chua ngọt", img:"images/Menu/TOPPING/nuocmam.jpg"},{name:"Đu đủ chua ngọt", img:"images/Menu/TOPPING/dudu.jpg"}], comments:[
+                {name:"Hương", text:"Giòn tan!", rating:5},
+                {name:"Lan", text:"Nhân tươi ngon.", rating:4},
+                {name:"Khoa", text:"Phù hợp ăn nhẹ.", rating:4},
+                {name:"Tiến", text:"Nước chấm tuyệt vời.", rating:4},
+                {name:"Phương", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.6},
+            { id:17, name:"Bánh tét", img:"images/Menu/banhtet/img.jpg", desc:"Bánh tét là món ăn truyền thống của miền Nam Việt Nam, đặc biệt phổ biến trong dịp Tết Nguyên Đán. Bánh được làm từ gạo nếp, đậu xanh và thịt lợn, được gói trong lá chuối và luộc chín. Bánh tét có hình trụ dài, khi cắt ra sẽ thấy các lớp nhân bên trong, thường được ăn kèm với dưa món hoặc nước mắm pha.", variants:[{name:"Bánh tét truyền thống", img:"images/Menu/banhtet/banhtettruyenthong.jpg"},{name:"Bánh tét chuối", img:"images/Menu/banhtet/banhtetchuoi.jpg"}], toppings:[{name:"Dưa món", img:"images/Menu/TOPPING/duamon.jpg"},{name:"Nước mắm pha", img:"images/Menu/TOPPING/nuocmam.jpg"}], comments:[
+                {name:"Minh", text:"Ngon chuẩn vị Tết.", rating:5},
+                {name:"Hà", text:"Gạo nếp dẻo.", rating:4},
+                {name:"An", text:"Nhân đậm đà.", rating:4},
+                {name:"Trung", text:"Phục vụ nhanh.", rating:4},
+                {name:"Lan", text:"Sẽ quay lại.", rating:5}
+            ], rating:4.5},
+            { id:18, name:"xôi xéo", img:"images/Menu/xoixeo/img.jpg", desc:"Xôi xéo là món ăn truyền thống của Việt Nam, đặc biệt phổ biến ở miền Bắc. Món xôi này được làm từ gạo nếp nấu chín, trộn với đậu xanh đã được hấp chín và nghiền nhuyễn, sau đó rắc lên trên là hành phi giòn tan. Xôi xéo thường được ăn kèm với chả lụa hoặc thịt kho tàu, tạo nên hương vị đậm đà và hấp dẫn.", variants:[{name:"đang cập nhật", img:"images/Menu/meme/meme.jpg"}], toppings:[{name:"Chả lụa", img:"images/Menu/TOPPING/chalua.jpg"},{name:"Hành phi", img:"images/Menu/TOPPING/hanhphi.jpg"},{name:"Nước mắm pha", img:"images/Menu/TOPPING/nuocmam.jpg"}], comments:[
+                {name:"Thu", text:"Xôi dẻo ngon.", rating:5},
+                {name:"Tú", text:"Đậu xanh bùi.", rating:4},
+                {name:"Hà", text:"Phục vụ nhanh.", rating:4},
+                {name:"Thanh", text:"Giá cả hợp lý.", rating:4},
+                {name:"Bảo", text:"Sẽ quay lại.", rating:5}
             ], rating:4.5}
         ];
+
+        // --- Helpers ---
+        function getRandomColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 50%, 55%)`;
+        }
 
         const slidesEl = document.getElementById('slides');
         const dotsEl = document.getElementById('dots');
@@ -474,15 +1216,59 @@
         let autoId = setInterval(()=> goTo(current+1), 5000);
         function resetAuto(){ clearInterval(autoId); autoId = setInterval(()=> goTo(current+1), 5000); }
 
+        const tabsNav = document.querySelector('nav.tabs');
+        const underline = tabsNav.querySelector('::after');
+
+        function updateUnderline(targetButton) {
+            if (!targetButton) return;
+            const navRect = tabsNav.getBoundingClientRect();
+            const btnRect = targetButton.getBoundingClientRect();
+            tabsNav.style.setProperty('--underline-left', `${btnRect.left - navRect.left}px`);
+            tabsNav.style.setProperty('--underline-width', `${btnRect.width}px`);
+        }
+
         document.querySelectorAll('.tab-btn').forEach(btn=>{
+            if (btn.classList.contains('complete')) {
+                btn.addEventListener('mouseenter', createTabParticles);
+            }
             btn.addEventListener('click', ()=>{
                 document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
                 btn.classList.add('active');
                 const tgt = btn.dataset.target;
                 document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
                 document.getElementById(tgt).classList.add('active');
+                updateUnderline(btn);
             });
         });
+        // Initial underline position
+        function createTabParticles(e) {
+            const count = 15;
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'tab-particle';
+                document.body.appendChild(particle);
+
+                const size = Math.random() * 5 + 2;
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 40 + 20;
+                const endX = Math.cos(angle * Math.PI / 180) * distance;
+                const endY = Math.sin(angle * Math.PI / 180) * distance;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${e.clientX}px`;
+                particle.style.top = `${e.clientY}px`;
+                particle.style.background = `hsl(${Math.random() * 60 + 90}, 70%, 60%)`; // Tông màu xanh lá
+                particle.style.setProperty('--transform-end', `translate(${endX}px, ${endY}px)`);
+
+                particle.addEventListener('animationend', () => particle.remove());
+            }
+        }
+        updateUnderline(document.querySelector('.tab-btn.active'));
 
         const grid = document.getElementById('menuGrid');
         function renderGrid(list){
@@ -539,6 +1325,7 @@
                         const name = deriveName(comments[clamped], clamped);
                         cname.textContent = name;
                         cavatar.textContent = (name.trim().charAt(0) || 'U').toUpperCase();
+                        cavatar.style.background = getRandomColor();
                         idx = clamped;
                     }
 
@@ -570,6 +1357,25 @@
 
                     ctext.scrollTop = 0;
                     updateMeta(0);
+
+                    // --- Tự động lướt bình luận ---
+                    let commentInterval;
+                    const startAutoScroll = () => {
+                        if (comments.length <= 1) return; // Không cần lướt nếu chỉ có 1 hoặc 0 bình luận
+                        const randomInterval = Math.random() * 3000 + 4000; // Ngẫu nhiên từ 1-3 giây
+                        commentInterval = setInterval(() => {
+                            const itemEl = ctext.querySelector('.citem');
+                            const h = itemEl ? itemEl.offsetHeight : 48;
+                            const nextIndex = (idx + 1) % comments.length;
+                            ctext.scrollTo({ top: nextIndex * h, behavior: 'smooth' });
+                        }, randomInterval);
+                    };
+
+                    const stopAutoScroll = () => clearInterval(commentInterval);
+
+                    preview.addEventListener('mouseenter', stopAutoScroll);
+                    preview.addEventListener('mouseleave', startAutoScroll);
+                    startAutoScroll();
                 })(card, d);
               });
           }
@@ -594,6 +1400,7 @@
         const dlgTops = document.getElementById('dlgTops');
         const dlgComments = document.getElementById('dlgComments');
         const dlgRating = document.getElementById('dlgRating');
+        let currentDishId = null;
         document.getElementById('closeDlg').addEventListener('click', ()=> modal.classList.remove('active'));
         modal.addEventListener('click', (e)=> { if(e.target===modal) modal.classList.remove('active'); });
 
@@ -607,6 +1414,7 @@
         function openDish(id){
             const d = dishes.find(x=>x.id===id);
             if(!d) return;
+            currentDishId = id;
             dlgTitle.textContent = d.name;
             dlgImg.src = d.img;
             dlgDesc.textContent = d.desc;            
@@ -643,8 +1451,8 @@
             dlgComments.innerHTML = d.comments.map(c=>{
                 const name = c.name || (String(c.text||'').split(/[.!?…]/)[0].split(' ').slice(0,2).join(' ')) || 'Người dùng';
                 const initial = (name.trim().charAt(0) || 'U').toUpperCase();
-                const rstars = (typeof c.rating === 'number') ? ('<div style="color:#f5a623;font-size:14px">'+ '★'.repeat(Math.round(c.rating)) + '☆'.repeat(5-Math.round(c.rating)) + '</div>') : '';
-                return `<div class="cmt"><div style="display:flex;gap:10px;align-items:flex-start"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(180deg,var(--accent),#5f9b6a);color:#fff;display:grid;place-items:center;font-weight:700">${initial}</div><div><strong>${escapeHtml(name)}</strong>${rstars}<div style="margin-top:6px;color:#333">${escapeHtml(c.text)}</div></div></div></div>`;
+                const rstars = (typeof c.rating === 'number') ? ('<div style="color:#f5a623;font-size:14px">'+ '★'.repeat(Math.round(c.rating)) + '☆'.repeat(5 - Math.round(c.rating)) + '</div>') : '';
+                return `<div class="cmt"><div style="display:flex;gap:10px;align-items:flex-start"><div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${getRandomColor()};color:#fff;display:grid;place-items:center;font-weight:700">${initial}</div><div><strong>${escapeHtml(name)}</strong>${rstars}<div style="margin-top:6px;color:#333">${escapeHtml(c.text)}</div></div></div></div>`;
             }).join('');
             modal.classList.add('active');
         }
@@ -663,6 +1471,114 @@
              });
          }
         renderReviews();
+        const reviewSortSelect = document.getElementById('reviewSort');
+
+        function renderReviews(sortOrder = 'desc') {
+            const sortedDishes = [...dishes].sort((a, b) => {
+                return sortOrder === 'desc' ? b.rating - a.rating : a.rating - b.rating;
+            });
+
+            reviewList.innerHTML = '';
+            sortedDishes.forEach(d => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.dataset.id = d.id;
+                card.addEventListener('click', () => openDish(d.id));
+
+                const stars = '★'.repeat(Math.round(d.rating)) + '☆'.repeat(5 - Math.round(d.rating));
+                card.innerHTML = `
+                    <img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}">
+                    <div class="info">
+                        <h4>${escapeHtml(d.name)}</h4>
+                        <div class="score">${d.rating.toFixed(1)} / 5.0</div>
+                    </div>
+                    <div class="rating-display">
+                        <div class="stars">${stars}</div>
+                    </div>
+                `;
+                reviewList.appendChild(card);
+            });
+        }
+
+        reviewSortSelect.addEventListener('change', (e) => {
+            renderReviews(e.target.value);
+        });
+
+        // --- New Review Form Logic ---
+        const newReviewForm = document.getElementById('newReviewForm');
+        const reviewDishSelect = document.getElementById('reviewDishSelect');
+        const starRatingInput = document.getElementById('starRatingInput');
+        const reviewRatingInput = document.getElementById('reviewRatingInput');
+
+        function populateReviewDishSelect() {
+            reviewDishSelect.innerHTML = '<option value="" disabled selected>-- Chọn một món ăn --</option>';
+            dishes.forEach(dish => {
+                const option = document.createElement('option');
+                option.value = dish.id;
+                option.textContent = dish.name;
+                reviewDishSelect.appendChild(option);
+            });
+        }
+
+        starRatingInput.addEventListener('click', e => {
+            if (e.target.tagName === 'SPAN') {
+                const value = e.target.dataset.value;
+                reviewRatingInput.value = value;
+                // Cập nhật hiển thị sao
+                const stars = starRatingInput.querySelectorAll('span');
+                stars.forEach(star => {
+                    star.classList.toggle('selected', star.dataset.value <= value);
+                });
+            }
+        });
+
+        newReviewForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const dishId = parseInt(reviewDishSelect.value);
+            const dish = dishes.find(d => d.id === dishId);
+
+            if (dish) {
+                const newComment = {
+                    name: document.getElementById('reviewerNameInput').value,
+                    text: document.getElementById('reviewCommentInput').value,
+                    rating: parseInt(reviewRatingInput.value)
+                };
+                dish.comments.push(newComment);
+
+                // Tính lại rating trung bình
+                const totalRating = dish.comments.reduce((sum, c) => sum + (c.rating || 0), 0);
+                dish.rating = totalRating / dish.comments.length;
+
+                // Render lại các phần liên quan và reset form
+                saveAndRerender();
+                newReviewForm.reset();
+                starRatingInput.querySelectorAll('span').forEach(s => s.classList.remove('selected'));
+                alert('Cảm ơn bạn đã gửi đánh giá!');
+            }
+        });
+
+        // --- Order Tab Logic ---
+        function renderOrderTab() {
+            const orderGrid = document.getElementById('orderGrid');
+            const popularDishes = [...dishes]
+                .sort((a, b) => b.rating - a.rating)
+                .slice(0, 6); // Lấy 6 món có rating cao nhất
+
+            orderGrid.innerHTML = '';
+            popularDishes.forEach(d => {
+                const card = document.createElement('div');
+                card.className = 'order-card';
+                card.innerHTML = `
+                    <div class="imgwrap"><img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}"></div>
+                    <h4>${escapeHtml(d.name)}</h4>
+                    <div class="rating">${'★'.repeat(Math.round(d.rating))} ${d.rating.toFixed(1)}</div>
+                    <button class="btn-add-cart">Thêm vào giỏ</button>
+                `;
+                // Thêm sự kiện cho nút "Thêm vào giỏ" nếu cần
+                card.querySelector('.btn-add-cart').addEventListener('click', () => alert(`Đã thêm "${d.name}" vào giỏ hàng!`));
+                orderGrid.appendChild(card);
+            });
+        }
 
         const carousel = document.getElementById('carousel');
         let isDragging = false, startX = 0, startTime = 0, basePct = 0;
@@ -683,6 +1599,8 @@
             carousel.classList.add('grabbing');
             clearInterval(autoId);
             e.preventDefault();
+            window.addEventListener('pointermove', onPointerMove, {passive:false});
+            window.addEventListener('pointerup', onPointerUp, {passive:false});
         }
         function onPointerMove(e){
             if(!isDragging) return;
@@ -705,14 +1623,11 @@
                 goTo(current);
             }
             resetAuto();
+            window.removeEventListener('pointermove', onPointerMove, {passive:false});
+            window.removeEventListener('pointerup', onPointerUp, {passive:false});
         }
-
+        
         carousel.addEventListener('pointerdown', onPointerDown, {passive:false});
-        window.addEventListener('pointermove', onPointerMove, {passive:true});
-        window.addEventListener('pointerup', onPointerUp, {passive:true});
-        carousel.addEventListener('touchstart', onPointerDown, {passive:false});
-        carousel.addEventListener('touchmove', onPointerMove, {passive:false});
-        carousel.addEventListener('touchend', onPointerUp, {passive:true});
 
         carousel.addEventListener('mouseenter', ()=> clearInterval(autoId));
         carousel.addEventListener('mouseleave', ()=> resetAuto());
@@ -722,6 +1637,189 @@
         function escapeHtml(s){
             return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
         }
+
+        // --- TÍNH NĂNG THÊM/SỬA/XÓA MÓN ĂN ---
+        const addDishBtn = document.getElementById('addDishBtn');
+        const dishFormModal = document.getElementById('dishFormModal');
+        const dishForm = document.getElementById('dishForm');
+        const dishFormTitle = document.getElementById('dishFormTitle');
+        const dishIdInput = document.getElementById('dishIdInput');
+        const variantsContainer = document.getElementById('variantsContainer');
+        const toppingsContainer = document.getElementById('toppingsContainer');
+
+        // Hiển thị nút + khi ở tab menu
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.attributeName === 'class') {
+                    const menuPane = document.getElementById('menu');
+                    addDishBtn.classList.toggle('visible', menuPane.classList.contains('active'));
+                }
+            });
+        });
+        observer.observe(document.getElementById('menu'), { attributes: true });
+        addDishBtn.classList.toggle('visible', document.getElementById('menu').classList.contains('active'));
+
+        // Xử lý input file
+        function handleFileInput(inputGroup) {
+            const fileInput = inputGroup.querySelector('.file-input');
+            const urlInput = inputGroup.querySelector('input[type="text"]');
+            const previewImg = inputGroup.querySelector('.image-preview');
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const dataUrl = event.target.result;
+                        previewImg.src = dataUrl;
+                        urlInput.value = ''; // Clear URL if file is chosen
+                        urlInput.dataset.fileData = dataUrl; // Store base64 data
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            urlInput.addEventListener('input', () => {
+                previewImg.src = urlInput.value || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+                delete urlInput.dataset.fileData; // Clear file data if URL is typed
+                fileInput.value = ''; // Clear file input
+            });
+        }
+        handleFileInput(document.getElementById('dishImgInput').closest('.image-input-group'));
+
+        // Mở form thêm món
+        addDishBtn.addEventListener('click', () => {
+            dishForm.reset();
+            dishIdInput.value = '';
+            dishFormTitle.textContent = 'Thêm Món Ăn Mới';
+            variantsContainer.innerHTML = '';
+            toppingsContainer.innerHTML = '';
+            document.querySelectorAll('.image-preview').forEach(p => p.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+            dishFormModal.classList.add('active');
+        });
+
+        // Đóng form
+        dishFormModal.querySelectorAll('.close-form-modal').forEach(btn => {
+            btn.addEventListener('click', () => dishFormModal.classList.remove('active'));
+        });
+
+        // Hàm tạo trường nhập cho variant/topping
+        function createDynamicItem(item = { name: '', img: '' }) {
+            const div = document.createElement('div');
+            div.className = 'dynamic-item';
+            div.innerHTML = `
+                <div class="dynamic-item-header">
+                    <input type="text" class="form-input" placeholder="Tên" value="${escapeHtml(item.name)}" required>
+                    <button type="button" class="btn-remove">Xóa</button>
+                </div>
+                <div class="image-input-group">
+                    <input type="text" class="form-input" placeholder="URL hình ảnh" value="${escapeHtml(item.img)}">
+                    <label class="file-label">Chọn file<input type="file" class="file-input" accept="image/*" style="display:none;"></label>
+                    <img class="image-preview" src="${escapeHtml(item.img) || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'}">
+                </div>
+            `;
+            div.querySelector('.btn-remove').addEventListener('click', () => div.remove());
+            handleFileInput(div.querySelector('.image-input-group'));
+            return div;
+        }
+
+        // Thêm variant/topping
+        document.getElementById('addVariantBtn').addEventListener('click', () => {
+            variantsContainer.appendChild(createDynamicItem());
+        });
+        document.getElementById('addToppingBtn').addEventListener('click', () => {
+            toppingsContainer.appendChild(createDynamicItem());
+        });
+
+        // Mở form sửa món
+        document.getElementById('editDishBtn').addEventListener('click', () => {
+            const dish = dishes.find(d => d.id === currentDishId);
+            if (!dish) return;
+
+            dishForm.reset();
+            dishFormTitle.textContent = 'Chỉnh Sửa Món Ăn';
+            dishIdInput.value = dish.id;
+            document.getElementById('dishNameInput').value = dish.name;
+            document.getElementById('dishDescInput').value = dish.desc;
+            
+            const mainImgInput = document.getElementById('dishImgInput');
+            mainImgInput.value = dish.img;
+            mainImgInput.closest('.image-input-group').querySelector('.image-preview').src = dish.img;
+            delete mainImgInput.dataset.fileData;
+
+            variantsContainer.innerHTML = '';
+            dish.variants.forEach(v => variantsContainer.appendChild(createDynamicItem(v)));
+
+            toppingsContainer.innerHTML = '';
+            dish.toppings.forEach(t => toppingsContainer.appendChild(createDynamicItem(t)));
+
+            modal.classList.remove('active'); // Đóng modal chi tiết
+            dishFormModal.classList.add('active'); // Mở modal form
+        });
+
+        // Xử lý submit form
+        dishForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = parseInt(dishIdInput.value);
+            
+            const getItems = (container) => {
+                return [...container.children].map(div => {
+                    const urlInput = div.querySelector('input[type="text"]');
+                    return {
+                        name: div.querySelector('.dynamic-item-header input').value,
+                        img: urlInput.dataset.fileData || urlInput.value
+                    };
+                });
+            };
+
+            const mainImgUrlInput = document.getElementById('dishImgInput');
+            const dishData = {
+                name: document.getElementById('dishNameInput').value,
+                desc: document.getElementById('dishDescInput').value,
+                img: mainImgUrlInput.dataset.fileData || mainImgUrlInput.value,
+                variants: getItems(variantsContainer),
+                toppings: getItems(toppingsContainer),
+            };
+
+            if (id) { // Sửa món
+                const index = dishes.findIndex(d => d.id === id);
+                if (index !== -1) {
+                    dishes[index] = { ...dishes[index], ...dishData };
+                }
+            } else { // Thêm món mới
+                const newId = dishes.length > 0 ? Math.max(...dishes.map(d => d.id)) + 1 : 1;
+                dishes.push({
+                    id: newId,
+                    ...dishData,
+                    rating: 0, // Rating ban đầu
+                    comments: []
+                });
+            }
+
+            renderGrid(dishes);
+            renderReviews();
+            renderReviews(reviewSortSelect.value); // Render lại review với thứ tự sắp xếp hiện tại
+            renderOrderTab(); // Cập nhật lại tab đặt hàng
+            populateReviewDishSelect(); // Cập nhật lại danh sách món ăn trong form review
+            dishFormModal.classList.remove('active');
+        });
+
+        // Xóa món ăn
+        document.getElementById('deleteDishBtn').addEventListener('click', () => {
+            if (confirm(`Bạn có chắc chắn muốn xóa món "${dlgTitle.textContent}" không?`)) {
+                const index = dishes.findIndex(d => d.id === currentDishId);
+                if (index !== -1) {
+                    dishes.splice(index, 1);
+                    renderGrid(dishes);
+                    renderReviews();
+                    renderGrid(dishes); // Cập nhật lại cả 2 mục
+                    renderOrderTab();
+                    populateReviewDishSelect();
+                    renderReviews(reviewSortSelect.value);
+                    modal.classList.remove('active');
+                }
+            }
+        });
     </script>
 </body>
 </html>
