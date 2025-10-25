@@ -84,10 +84,10 @@
         }
         .carousel{
             width:100%;
-            max-width:1100px;
-            height:360px;
+            max-width:1100px; /* Giữ nguyên chiều rộng tối đa */
+            height:450px; /* Tăng chiều cao để phù hợp với lướt dọc */
             overflow:hidden;
-            border-radius:16px;
+            border-radius:var(--radius);
             box-shadow: var(--shadow);
             position:relative; /* Giữ nguyên định vị tương đối */
             background:linear-gradient(180deg,#F0EBE4,#FFFCF7); /* Điều chỉnh gradient carousel theo màu mới */
@@ -95,7 +95,8 @@
         .slides{
             display:flex;
             height:100%; /* Giữ nguyên chiều cao */
-            transition: transform 700ms ease; /* Điều chỉnh tốc độ chuyển slide mượt mà hơn */
+            flex-direction: column; /* Thay đổi thành lướt dọc */
+            transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1); /* Điều chỉnh tốc độ chuyển slide mượt mà hơn */
             will-change: transform;
         }
         .slide{
@@ -122,10 +123,10 @@
             pointer-events:none;
         }
         .carousel-controls{
-            position:absolute;
-            left:12px;right:12px;bottom:12px;
-            display:flex;justify-content:space-between;align-items:center;
-            pointer-events:none;
+            position:absolute; /* Giữ nguyên vị trí tuyệt đối */
+            top: 50%; right: 12px; /* Đặt ở cạnh phải và căn giữa theo chiều dọc */
+            transform: translateY(-50%); /* Căn giữa chính xác */
+            display: flex; flex-direction: column; align-items: center; gap: 16px; /* Sắp xếp các nhóm control theo chiều dọc */
         }
         .dots{display:flex;gap:8px;pointer-events:auto}
         .dot{
@@ -134,7 +135,7 @@
         }
         .dot.active{background:var(--accent);transform:scale(1.15)}
         .control-btn{
-            pointer-events:auto;background:rgba(255,255,255,0.85);border-radius:10px;padding:8px;
+            pointer-events:auto;background:rgba(255,255,255,0.85);border-radius:var(--radius);padding:8px;
             box-shadow:var(--shadow);cursor:pointer;border:0;
         }
 
@@ -238,21 +239,33 @@
 
 
         .content{
-            max-width:1100px;margin:12px auto;padding:18px;background:transparent;
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 10 1px; /* Giảm padding ngang để nội dung chiếm nhiều không gian hơn */
+            background: transparent;
+            overflow: hidden; /* Ẩn các pane không hoạt động */
         }
-        .pane{display:none}
-        .pane.active{display:block}
+        .panes-container {
+            display: flex;
+            transition: transform 500ms cubic-bezier(0.23, 1, 0.32, 1); /* Hiệu ứng chuyển động mượt mà */
+            will-change: transform;
+        }
+        .pane {
+            flex: 0 0 100%; /* Mỗi pane chiếm 100% chiều rộng */
+            width: 100%;
+        }
 
         /* Intro */
         .intro{
             display:flex;gap:18px;align-items:center;
             background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
-            background:linear-gradient(180deg, rgba(255,252,247,0.6), rgba(255,252,247,0.4)); /* Điều chỉnh gradient intro theo màu mới */
+            background:linear-gradient(180deg, rgba(255,252,247,0.6), rgba(255,252,247,0.4));
             padding:16px;border-radius:12px;box-shadow:var(--shadow);
+            border: 2px solid #856d4b; /* Viền màu nâu cổ */
         }
         .intro img{width:220px;height:140px;object-fit:cover;border-radius:10px}
         .intro .txt{flex:1;color:#333}
-
+        .intro + .intro { margin-top: 18px; } /* Thêm khoảng cách giữa các khối intro */
         /* Menu grid */
         .searchbar {
             display: flex;
@@ -277,7 +290,7 @@
         .card{
             background:var(--card);border-radius:12px;padding:10px;box-shadow:var(--shadow);
             transition:transform 260ms,var(--transition);
-            cursor:pointer;border:1px solid rgba(0,0,0,0.03);
+            cursor:pointer;border:1px solid #E0D5C8; /* Viền sáng hơn cho thẻ món ăn */
             display:flex;flex-direction:column;gap:10px;
         }
         .card:hover{transform:translateY(-6px)}
@@ -308,13 +321,14 @@
         .dialog{
             width:100%;max-width:820px;background:#fff;border-radius:14px;padding:18px;box-shadow:0 18px 60px rgba(0,0,0,0.3);
             max-height:90vh;overflow:auto;
-            /* Hiệu ứng lướt từ dưới lên với hiệu ứng nảy */
-            transform: translateY(100vh) rotate(3deg);
+            /* Hiệu ứng zoom-in khi mở */
+            transform: scale(0.8);
             opacity: 0;
-            transition: transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 400ms ease-out;
+            transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 250ms ease-out;
         }
         .modal.active .dialog {
-            transform: translateY(0) rotate(0deg);
+            /* Phóng to về kích thước đầy đủ */
+            transform: scale(1);
             opacity: 1;
         }
         .dialog .top{display:flex;gap:14px}
@@ -534,7 +548,7 @@
         .review-card {
             display: flex; align-items: center; gap: 16px;
             background: var(--card); padding: 12px; border-radius: 12px;
-            box-shadow: var(--shadow); margin-bottom: 12px; cursor: pointer;
+            box-shadow: var(--shadow); margin-bottom: 12px; cursor: pointer; border: 1px solid #7d6b54; /* Viền đậm hơn cho thẻ đánh giá */
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .review-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
@@ -574,12 +588,21 @@
             text-align: center;
             background: var(--card);
             border-radius: 12px;
-            box-shadow: var(--shadow);
-            border: 1px dashed #e0d5c8;
+            box-shadow: var(--shadow); border: 1px solid #e57373; /* Viền đỏ cho mục chưa làm */
         }
         .development-notice h3 { font-family: 'Dancing Script', cursive; font-size: 36px; color: #e57373; margin: 0 0 10px; }
         .development-notice p { color: #666; line-height: 1.7; max-width: 600px; margin: 0 auto; }
         .development-notice a { color: var(--accent); font-weight: 600; text-decoration: none; }
+
+        /* Hiệu ứng viền RGB cho logo trong modal */
+        .rgb-border {
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            animation: rgb-border-anim 3s linear infinite;
+        }
+        @keyframes rgb-border-anim {
+            0% { border-color: #ff0000; } 25% { border-color: #00ff00; } 50% { border-color: #0000ff; } 75% { border-color: #ffff00; } 100% { border-color: #ff0000; }
+        }
 
 
         /* Review Submission Form */
@@ -685,11 +708,11 @@
             </div>
 
             <div class="carousel-controls">
-                <div class="left-controls" style="display:flex;gap:8px;">
-                    <button class="control-btn" id="prev" title="Trước">◀</button>
-                    <button class="control-btn" id="next" title="Tiếp">▶</button>
+                <div class="nav-buttons" style="display:flex;flex-direction:column;gap:8px;">
+                    <button class="control-btn" id="prev" title="Lên">▲</button>
+                    <button class="control-btn" id="next" title="Xuống">▼</button>
                 </div>
-                <div class="dots" id="dots"></div>
+                <div class="dots" id="dots" style="flex-direction: column;"></div>
             </div>
         </div>
     </section>
@@ -704,122 +727,124 @@
     </nav>
 
     <main class="content">
-        <section id="intro" class="pane active">
-            <div class="intro reveal">
-                <img src="images/introduce/introduce-slide-1.jpg" alt="Tinh tế của hương vị">
-                <div class="txt">
-                    <h3>Ẩm thực VIỆT NAM-Bản giao hưởng tinh tế của hương vị</h3>
-                    <p>
-                        Ẩm thực Việt Nam từ lâu đã vượt ra khỏi biên giới quốc gia để trở thành một trong những nền ẩm thực được yêu mến và đánh giá cao nhất trên thế giới. Đó không chỉ đơn thuần là những món ăn ngon, mà là một di sản văn hóa kết tinh từ lịch sử lâu đời, sự đa dạng địa lý và triết lý sống hài hòa của người Việt.
-                    </p>
-                </div>
-            </div>
-            <div class="intro reveal">
-                <img src="images/introduce/introduce-slide-2.jpg" alt="Cân bằng trong gia vị">
-                <div class="txt">
-                    <h3>Ẩm thực VIỆT NAM-Triết lý cân bằng trong gia vị</h3>
-                    <p>
-                        Điểm đặc sắc làm nên "linh hồn" của ẩm thực Việt là triết lý cân bằng Âm - Dương. Mỗi món ăn đều là một sự phối trộn hài hòa của ngũ vị (chua, cay, mặn, ngọt, đắng) và ngũ sắc (trắng, xanh, vàng, đỏ, đen), không chỉ kích thích vị giác mà còn tạo nên một tổng thể bổ dưỡng cho sức khỏe. Sự cân bằng này thể hiện ở việc các nguyên liệu mang tính "hàn" (lạnh) luôn được kết hợp với các gia vị mang tính "nhiệt" (nóng) và ngược lại, tạo nên sự quân bình hoàn hảo.
-                    </p>
-                </div>
-            </div>
-            <div class="intro reveal">
-                <img src="images/introduce/introduce-slide-3.jpg" alt="Thiên đường trong ẩm thực">
-                <div class="txt">
-                    <h3>Ẩm thực VIỆT NAM-Thiên đường của ẩm thực</h3>
-                    <p>
-                        Một trong những yếu tố chinh phục thực khách quốc tế chính là việc sử dụng vô vàn các loại rau thơm và nguyên liệu tươi mới. Hiếm có nền ẩm thực nào mà rau sống, thảo mộc (như húng quế, ngò rí, tía tô, kinh giới...) lại đóng vai trò quan trọng và đa dạng đến vậy. Chúng không chỉ là đồ trang trí mà là thành phần chủ đạo, mang đến sự thanh mát, bùng nổ hương thơm và làm giảm độ ngấy của các món chiên, nướng hay giàu đạm.
-                        Các món ăn Việt, đặc biệt là các loại nước dùng (như Phở, Bún Bò Huế), nổi tiếng với sự trong trẻo, thanh tao nhưng lại sâu sắc về hương vị, kết quả của quá trình ninh xương và thảo mộc công phu hàng giờ liền.
-                    </p>
-                </div>
-            </div>
-            <div class="intro reveal">
-                <img src="images/introduce/introduce-slide-4.jpg" alt="đa dạng bản sắc dân tộc trong ẩm thực">
-                <div class="txt">
-                    <h3>Ẩm thực VIỆT NAM-Sự đa dạng bản sắc</h3>
-                    <p>
-                        Ẩm thực Việt Nam là một bức tranh đa sắc màu với ba phong cách đặc trưng của ba miền:
-
-Ẩm thực miền Bắc: Chú trọng sự tinh tế, thanh tao với khẩu vị vừa vặn, không quá nồng gắt. Đây là nơi khai sinh ra những "quốc hồn quốc túy" như Phở Hà Nội, Bún Chả, Chả Cá Lã Vọng.
-
-Ẩm thực miền Trung: Nổi bật với hương vị đậm đà, mạnh mẽ và thiên về vị cay nồng. Vùng đất cố đô Huế đã đóng góp cho nền ẩm thực sự cầu kỳ, tinh xảo trong cả hương vị lẫn cách trình bày (như Bún Bò Huế, Bánh Bột Lọc, Cơm Hến).
-
-Ẩm thực miền Nam: Chịu ảnh hưởng của sự giao thoa văn hóa, mang đến hương vị phóng khoáng, ngọt ngào (từ đường, nước cốt dừa) và đa dạng (như Bánh Xèo, Gỏi Cuốn, Hủ Tiếu Nam Vang).
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="menu" class="pane">
-            <div style="display:flex;flex-direction:column">
-                <div class="searchbar"><input id="search" placeholder="Tìm món ăn bạn yêu thích..."></div>
-
-                <div class="grid" id="menuGrid">
-                </div>
-            </div>
-        </section>
-
-        <section id="reviews" class="pane">
-            <h3>Đánh giá người dùng</h3>
-            <div class="review-list" id="reviewList">
-            <div class="review-controls">
-                <label for="reviewSort" style="font-weight: 600; color: #555;">Sắp xếp theo:</label>
-                <select id="reviewSort">
-                    <option value="desc">Đánh giá: Cao đến Thấp</option>
-                    <option value="asc">Đánh giá: Thấp đến Cao</option>
-                </select>
-            </div>
-            <div id="reviewList">
-                <!-- Các thẻ đánh giá sẽ được render vào đây -->
-            </div>
-
-            <div class="review-form-container">
-                <h4>Gửi đánh giá của bạn</h4>
-                <form id="newReviewForm">
-                    <div class="form-group">
-                        <label for="reviewDishSelect">Chọn món ăn:</label>
-                        <select id="reviewDishSelect" required></select>
+        <div class="panes-container">
+            <section id="intro" class="pane active">
+                <div class="intro reveal">
+                    <img src="images/introduce/introduce-slide-1.jpg" alt="Tinh tế của hương vị">
+                    <div class="txt">
+                        <h3>Ẩm thực VIỆT NAM-Bản giao hưởng tinh tế của hương vị</h3>
+                        <p>
+                            Ẩm thực Việt Nam từ lâu đã vượt ra khỏi biên giới quốc gia để trở thành một trong những nền ẩm thực được yêu mến và đánh giá cao nhất trên thế giới. Đó không chỉ đơn thuần là những món ăn ngon, mà là một di sản văn hóa kết tinh từ lịch sử lâu đời, sự đa dạng địa lý và triết lý sống hài hòa của người Việt.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="reviewerNameInput">Tên của bạn:</label>
-                        <input type="text" id="reviewerNameInput" placeholder="Nhập tên của bạn" required>
+                </div>
+                <div class="intro reveal">
+                    <img src="images/introduce/introduce-slide-2.jpg" alt="Cân bằng trong gia vị">
+                    <div class="txt">
+                        <h3>Ẩm thực VIỆT NAM-Triết lý cân bằng trong gia vị</h3>
+                        <p>
+                            Điểm đặc sắc làm nên "linh hồn" của ẩm thực Việt là triết lý cân bằng Âm - Dương. Mỗi món ăn đều là một sự phối trộn hài hòa của ngũ vị (chua, cay, mặn, ngọt, đắng) và ngũ sắc (trắng, xanh, vàng, đỏ, đen), không chỉ kích thích vị giác mà còn tạo nên một tổng thể bổ dưỡng cho sức khỏe. Sự cân bằng này thể hiện ở việc các nguyên liệu mang tính "hàn" (lạnh) luôn được kết hợp với các gia vị mang tính "nhiệt" (nóng) và ngược lại, tạo nên sự quân bình hoàn hảo.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label>Đánh giá (sao):</label>
-                        <div class="star-rating-input" id="starRatingInput">
-                            <span data-value="5">☆</span><span data-value="4">☆</span><span data-value="3">☆</span><span data-value="2">☆</span><span data-value="1">☆</span>
+                </div>
+                <div class="intro reveal">
+                    <img src="images/introduce/introduce-slide-3.jpg" alt="Thiên đường trong ẩm thực">
+                    <div class="txt">
+                        <h3>Ẩm thực VIỆT NAM-Thiên đường của ẩm thực</h3>
+                        <p>
+                            Một trong những yếu tố chinh phục thực khách quốc tế chính là việc sử dụng vô vàn các loại rau thơm và nguyên liệu tươi mới. Hiếm có nền ẩm thực nào mà rau sống, thảo mộc (như húng quế, ngò rí, tía tô, kinh giới...) lại đóng vai trò quan trọng và đa dạng đến vậy. Chúng không chỉ là đồ trang trí mà là thành phần chủ đạo, mang đến sự thanh mát, bùng nổ hương thơm và làm giảm độ ngấy của các món chiên, nướng hay giàu đạm.
+                            Các món ăn Việt, đặc biệt là các loại nước dùng (như Phở, Bún Bò Huế), nổi tiếng với sự trong trẻo, thanh tao nhưng lại sâu sắc về hương vị, kết quả của quá trình ninh xương và thảo mộc công phu hàng giờ liền.
+                        </p>
+                    </div>
+                </div>
+                <div class="intro reveal">
+                    <img src="images/introduce/introduce-slide-4.jpg" alt="đa dạng bản sắc dân tộc trong ẩm thực">
+                    <div class="txt">
+                        <h3>Ẩm thực VIỆT NAM-Sự đa dạng bản sắc</h3>
+                        <p>
+                            Ẩm thực Việt Nam là một bức tranh đa sắc màu với ba phong cách đặc trưng của ba miền:
+
+    Ẩm thực miền Bắc: Chú trọng sự tinh tế, thanh tao với khẩu vị vừa vặn, không quá nồng gắt. Đây là nơi khai sinh ra những "quốc hồn quốc túy" như Phở Hà Nội, Bún Chả, Chả Cá Lã Vọng.
+
+    Ẩm thực miền Trung: Nổi bật với hương vị đậm đà, mạnh mẽ và thiên về vị cay nồng. Vùng đất cố đô Huế đã đóng góp cho nền ẩm thực sự cầu kỳ, tinh xảo trong cả hương vị lẫn cách trình bày (như Bún Bò Huế, Bánh Bột Lọc, Cơm Hến).
+
+    Ẩm thực miền Nam: Chịu ảnh hưởng của sự giao thoa văn hóa, mang đến hương vị phóng khoáng, ngọt ngào (từ đường, nước cốt dừa) và đa dạng (như Bánh Xèo, Gỏi Cuốn, Hủ Tiếu Nam Vang).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="menu" class="pane">
+                <div style="display:flex;flex-direction:column">
+                    <div class="searchbar"><input id="search" placeholder="Tìm món ăn bạn yêu thích..."></div>
+
+                    <div class="grid" id="menuGrid">
+                    </div>
+                </div>
+            </section>
+
+            <section id="reviews" class="pane">
+                <h3>Đánh giá người dùng</h3>
+                <div class="review-list" id="reviewList">
+                <div class="review-controls" id="reviewControls">
+                    <label for="reviewSort" style="font-weight: 600; color: #555;">Sắp xếp theo:</label>
+                    <select id="reviewSort">
+                        <option value="desc">Đánh giá: Cao đến Thấp</option>
+                        <option value="asc">Đánh giá: Thấp đến Cao</option>
+                    </select>
+                </div>
+                <div id="reviewList">
+                    <!-- Các thẻ đánh giá sẽ được render vào đây -->
+                </div>
+
+                <div class="review-form-container">
+                    <h4>Gửi đánh giá của bạn</h4>
+                    <form id="newReviewForm">
+                        <div class="form-group">
+                            <label for="reviewDishSelect">Chọn món ăn:</label>
+                            <select id="reviewDishSelect" required></select>
                         </div>
-                        <input type="hidden" id="reviewRatingInput" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewCommentInput">Bình luận:</label>
-                        <textarea id="reviewCommentInput" rows="4" placeholder="Chia sẻ cảm nhận của bạn về món ăn..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit" style="width: 100%; padding: 12px;">Gửi đánh giá</button>
-                </form>
-            </div>
-        </section>
+                        <div class="form-group">
+                            <label for="reviewerNameInput">Tên của bạn:</label>
+                            <input type="text" id="reviewerNameInput" placeholder="Nhập tên của bạn" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Đánh giá (sao):</label>
+                            <div class="star-rating-input" id="starRatingInput">
+                                <span data-value="5">☆</span><span data-value="4">☆</span><span data-value="3">☆</span><span data-value="2">☆</span><span data-value="1">☆</span>
+                            </div>
+                            <input type="hidden" id="reviewRatingInput" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewCommentInput">Bình luận:</label>
+                            <textarea id="reviewCommentInput" rows="4" placeholder="Chia sẻ cảm nhận của bạn về món ăn..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" style="width: 100%; padding: 12px;">Gửi đánh giá</button>
+                    </form>
+                </div>
+            </section>
 
-        <section id="order" class="pane">
-            <div class="development-notice">
-                <h3>ĐANG PHÁT TRIỂN</h3>
-                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
-            </div>
-        </section>
+            <section id="order" class="pane">
+                <div class="development-notice">
+                    <h3>ĐANG PHÁT TRIỂN</h3>
+                    <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+                </div>
+            </section>
 
-        <section id="contact" class="pane">
-            <div class="development-notice">
-                <h3>ĐANG PHÁT TRIỂN</h3>
-                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
-            </div>
-        </section>
+            <section id="contact" class="pane">
+                <div class="development-notice">
+                    <h3>ĐANG PHÁT TRIỂN</h3>
+                    <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+                </div>
+            </section>
 
-        <section id="support" class="pane">
-            <div class="development-notice">
-                <h3>ĐANG PHÁT TRIỂN</h3>
-                <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
-            </div>
-        </section>
+            <section id="support" class="pane">
+                <div class="development-notice">
+                    <h3>ĐANG PHÁT TRIỂN</h3>
+                    <p>xin hãy chờ đợi Nam Thành Nguyễn cập nhật trong tương lai, nếu có thêm gợi ý, feedback về web xin liên hệ qua gmail <a href="mailto:nthnam208@gmail.com">nthnam208@gmail.com</a> nhe</p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <div class="modal" id="modal">
@@ -865,7 +890,7 @@
                 <button type="button" class="close-developer-modal" style="background:transparent;border:0;font-size:20px;cursor:pointer">✕</button>
             </div>
             <div style="text-align: center; padding: 20px;">
-                <img src="images/logo/logo.png" alt="Logo Ẩm thực Việt Nam" style="width: 120px; height: 120px; border-radius: 15px; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: var(--shadow);">
+                <img src="images/logo/logo.png" alt="Logo Ẩm thực Việt Nam" class="dev-logo-border" style="width: 120px; height: 120px; border-radius: 15px; object-fit: cover; margin-bottom: 20px;">
                 <h3 style="margin: 10px 0;">Nhóm Phát Triển "Bếp Việt"</h3>
                 <p style="color:#555; margin: 5px 0;">Nguyễn Thành Nam - Leader</p>
                 <p style="color:#555; margin: 5px 0;">Lê Bá Phúc</p>
@@ -1195,29 +1220,35 @@
         }
 
         const slidesEl = document.getElementById('slides');
+        const carouselEl = document.getElementById('carousel'); // Lấy carousel element
         const dotsEl = document.getElementById('dots');
         const slideCount = slidesEl.children.length;
         let current = 0;
         for(let i=0;i<slideCount;i++){
             const d = document.createElement('div'); d.className='dot'; if(i===0) d.classList.add('active');
             d.dataset.index = i;
-            d.addEventListener('click', ()=>{ goTo(parseInt(d.dataset.index)); resetAuto(); });
+            d.addEventListener('click', ()=>{ goTo(parseInt(d.dataset.index)); resetCarouselAuto(); });
             dotsEl.appendChild(d);
         }
         function updateDots(){ [...dotsEl.children].forEach((d,i)=>d.classList.toggle('active', i===current)); }
         function goTo(i){
             current = (i+slideCount)%slideCount;
-            slidesEl.style.transform = `translateX(-${current*100}%)`;
+            // Thay đổi translateX thành translateY
+            slidesEl.style.transform = `translateY(-${current*100}%)`;
             updateDots();
         }
-        document.getElementById('prev').addEventListener('click', ()=>{ goTo(current-1); resetAuto(); });
-        document.getElementById('next').addEventListener('click', ()=>{ goTo(current+1); resetAuto(); });
+        document.getElementById('prev').addEventListener('click', ()=>{ goTo(current-1); resetCarouselAuto(); });
+        document.getElementById('next').addEventListener('click', ()=>{ goTo(current+1); resetCarouselAuto(); });
 
-        let autoId = setInterval(()=> goTo(current+1), 5000);
-        function resetAuto(){ clearInterval(autoId); autoId = setInterval(()=> goTo(current+1), 5000); }
+        let carouselAutoId = setInterval(()=> goTo(current+1), 5000);
+        function resetCarouselAuto(){ clearInterval(carouselAutoId); carouselAutoId = setInterval(()=> goTo(current+1), 5000); }
 
         const tabsNav = document.querySelector('nav.tabs');
         const underline = tabsNav.querySelector('::after');
+
+        const panesContainer = document.querySelector('.panes-container');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const panes = document.querySelectorAll('.pane');
 
         function updateUnderline(targetButton) {
             if (!targetButton) return;
@@ -1227,17 +1258,19 @@
             tabsNav.style.setProperty('--underline-width', `${btnRect.width}px`);
         }
 
-        document.querySelectorAll('.tab-btn').forEach(btn=>{
+        tabButtons.forEach((btn, index) => {
             if (btn.classList.contains('complete')) {
                 btn.addEventListener('mouseenter', createTabParticles);
             }
             btn.addEventListener('click', ()=>{
                 document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-                btn.classList.add('active');
+                btn.classList.add('active'); // Thêm active class cho tab được click
                 const tgt = btn.dataset.target;
-                document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
-                document.getElementById(tgt).classList.add('active');
+                panes.forEach(p => p.classList.remove('active'));
+                document.getElementById(tgt)?.classList.add('active');
                 updateUnderline(btn);
+                // Di chuyển container đến pane tương ứng
+                panesContainer.style.transform = `translateX(-${index * 100}%)`; // Giữ nguyên lướt ngang cho panes
             });
         });
         // Initial underline position
@@ -1262,7 +1295,7 @@
                 particle.style.height = `${size}px`;
                 particle.style.left = `${e.clientX}px`;
                 particle.style.top = `${e.clientY}px`;
-                particle.style.background = `hsl(${Math.random() * 60 + 90}, 70%, 60%)`; // Tông màu xanh lá
+                particle.style.background = `hsl(${Math.random() * 60 + 90}, 50%, 50%)`; // Tông màu xanh lá dịu hơn
                 particle.style.setProperty('--transform-end', `translate(${endX}px, ${endY}px)`);
 
                 particle.addEventListener('animationend', () => particle.remove());
@@ -1280,7 +1313,7 @@
                 card.dataset.id = d.id;
                 const truncatedDesc = d.desc.length > 100 ? d.desc.substring(0, 100) + '...' : d.desc;
                 card.innerHTML = `
-                    <div class="imgwrap"><img src="${d.img}" alt="${d.name}"></div>
+                    <div class="imgwrap"><img src="${d.img}" alt="${d.name}" loading="lazy" decoding="async"></div>
                     <h3>${d.name}</h3>
                     <p>${truncatedDesc}</p>
                     <div class="comment-preview" aria-live="polite" tabindex="0">
@@ -1325,7 +1358,7 @@
                         const name = deriveName(comments[clamped], clamped);
                         cname.textContent = name;
                         cavatar.textContent = (name.trim().charAt(0) || 'U').toUpperCase();
-                        cavatar.style.background = getRandomColor();
+                        cavatar.style.background = `linear-gradient(180deg, ${getRandomMutedColor()}, #6A6052)`; // Sử dụng màu muted hơn
                         idx = clamped;
                     }
 
@@ -1362,14 +1395,14 @@
                     let commentInterval;
                     const startAutoScroll = () => {
                         if (comments.length <= 1) return; // Không cần lướt nếu chỉ có 1 hoặc 0 bình luận
-                        const randomInterval = Math.random() * 3000 + 4000; // Ngẫu nhiên từ 1-3 giây
+                        const randomInterval = Math.random() * 3000 + 4000; // Ngẫu nhiên từ 4-7 giây
                         commentInterval = setInterval(() => {
                             const itemEl = ctext.querySelector('.citem');
                             const h = itemEl ? itemEl.offsetHeight : 48;
                             const nextIndex = (idx + 1) % comments.length;
                             ctext.scrollTo({ top: nextIndex * h, behavior: 'smooth' });
                         }, randomInterval);
-                    };
+                    }; 
 
                     const stopAutoScroll = () => clearInterval(commentInterval);
 
@@ -1452,7 +1485,7 @@
                 const name = c.name || (String(c.text||'').split(/[.!?…]/)[0].split(' ').slice(0,2).join(' ')) || 'Người dùng';
                 const initial = (name.trim().charAt(0) || 'U').toUpperCase();
                 const rstars = (typeof c.rating === 'number') ? ('<div style="color:#f5a623;font-size:14px">'+ '★'.repeat(Math.round(c.rating)) + '☆'.repeat(5 - Math.round(c.rating)) + '</div>') : '';
-                return `<div class="cmt"><div style="display:flex;gap:10px;align-items:flex-start"><div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${getRandomColor()};color:#fff;display:grid;place-items:center;font-weight:700">${initial}</div><div><strong>${escapeHtml(name)}</strong>${rstars}<div style="margin-top:6px;color:#333">${escapeHtml(c.text)}</div></div></div></div>`;
+                return `<div class="cmt"><div style="display:flex;gap:10px;align-items:flex-start"><div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:linear-gradient(180deg, ${getRandomMutedColor()}, #6A6052);color:#fff;display:grid;place-items:center;font-weight:700">${initial}</div><div><strong>${escapeHtml(name)}</strong>${rstars}<div style="margin-top:6px;color:#333">${escapeHtml(c.text)}</div></div></div></div>`;
             }).join('');
             modal.classList.add('active');
         }
@@ -1460,17 +1493,13 @@
         const reviewList = document.getElementById('reviewList');
         function renderReviews(){
              reviewList.innerHTML = '';
-             dishes.slice().forEach(d=>{
-                 const r = document.createElement('div'); r.className='review-item';
-                r.style.cursor = 'pointer';
-                r.dataset.id = d.id;
-                r.addEventListener('click', ()=> openDish(d.id));
-                 const stars = '★'.repeat(Math.round(d.rating)) + '☆'.repeat(5 - Math.round(d.rating));
-                 r.innerHTML = `<div><strong>${d.name}</strong><div style="color:#888;font-size:13px">${d.rating.toFixed(1)} / 5</div></div><div style="font-size:18px;color:#f5a623">${stars}</div>`;
-                 reviewList.appendChild(r);
-             });
-         }
-        renderReviews();
+            // The original renderReviews function was replaced by the one below,
+            // so this empty function is just a placeholder to avoid errors if called.
+            // The actual rendering is done by the `renderReviews(sortOrder)` function.
+        }
+        // Initial render of reviews with default sort order
+        renderReviews('desc');
+
         const reviewSortSelect = document.getElementById('reviewSort');
 
         function renderReviews(sortOrder = 'desc') {
@@ -1487,7 +1516,7 @@
 
                 const stars = '★'.repeat(Math.round(d.rating)) + '☆'.repeat(5 - Math.round(d.rating));
                 card.innerHTML = `
-                    <img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}">
+                    <img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}" loading="lazy" decoding="async">
                     <div class="info">
                         <h4>${escapeHtml(d.name)}</h4>
                         <div class="score">${d.rating.toFixed(1)} / 5.0</div>
@@ -1550,7 +1579,7 @@
                 dish.rating = totalRating / dish.comments.length;
 
                 // Render lại các phần liên quan và reset form
-                saveAndRerender();
+                saveAndRerender(); // Gọi hàm để cập nhật toàn bộ giao diện
                 newReviewForm.reset();
                 starRatingInput.querySelectorAll('span').forEach(s => s.classList.remove('selected'));
                 alert('Cảm ơn bạn đã gửi đánh giá!');
@@ -1569,7 +1598,7 @@
                 const card = document.createElement('div');
                 card.className = 'order-card';
                 card.innerHTML = `
-                    <div class="imgwrap"><img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}"></div>
+                    <div class="imgwrap"><img src="${escapeHtml(d.img)}" alt="${escapeHtml(d.name)}" loading="lazy" decoding="async"></div>
                     <h4>${escapeHtml(d.name)}</h4>
                     <div class="rating">${'★'.repeat(Math.round(d.rating))} ${d.rating.toFixed(1)}</div>
                     <button class="btn-add-cart">Thêm vào giỏ</button>
@@ -1581,58 +1610,72 @@
         }
 
         const carousel = document.getElementById('carousel');
-        let isDragging = false, startX = 0, startTime = 0, basePct = 0;
+        let isDragging = false, startY = 0, startTime = 0, basePct = 0;
 
-        function getX(evt){
-            if(evt.touches && evt.touches[0]) return evt.touches[0].clientX;
-            if(evt.changedTouches && evt.changedTouches[0]) return evt.changedTouches[0].clientX;
-            return evt.clientX;
+        function getY(evt){
+            if(evt.touches && evt.touches[0]) return evt.touches[0].clientY;
+            if(evt.changedTouches && evt.changedTouches[0]) return evt.changedTouches[0].clientY;
+            return evt.clientY;
         }
 
         function onPointerDown(e){
             if(e.target.closest('.control-btn') || e.target.closest('.dots')) return;
             isDragging = true;
-            startX = getX(e);
+            startY = getY(e);
             startTime = Date.now();
             basePct = -current * 100;
             slidesEl.style.transition = 'none';
             carousel.classList.add('grabbing');
-            clearInterval(autoId);
+            clearInterval(carouselAutoId);
             e.preventDefault();
             window.addEventListener('pointermove', onPointerMove, {passive:false});
             window.addEventListener('pointerup', onPointerUp, {passive:false});
         }
         function onPointerMove(e){
             if(!isDragging) return;
-            const dx = getX(e) - startX;
-            const pct = (dx / carousel.clientWidth) * 100;
-            slidesEl.style.transform = `translateX(calc(${basePct}% + ${pct}%))`;
+            const dy = getY(e) - startY;
+            const pct = (dy / carousel.clientHeight) * 100;
+            slidesEl.style.transform = `translateY(calc(${basePct}% + ${pct}%))`;
         }
         function onPointerUp(e){
             if(!isDragging) return;
             isDragging = false;
-            carousel.classList.remove('grabbing');
+            carousel.classList.remove('grabbing'); // Sửa lỗi: phải là remove, không phải add
             slidesEl.style.transition = '';
-            const dx = getX(e) - startX;
+            const dy = getY(e) - startY;
             const dt = Date.now() - startTime;
-            const threshold = Math.min(80, carousel.clientWidth * 0.15); // px
-            const fast = dt < 220 && Math.abs(dx) > 20;
-            if(Math.abs(dx) > threshold || fast){
-                if(dx > 0) goTo(current - 1); else goTo(current + 1);
+            const threshold = Math.min(80, carousel.clientHeight * 0.15);
+            const fast = dt < 220 && Math.abs(dy) > 20;
+            if(Math.abs(dy) > threshold || fast){
+                // Nếu kéo xuống (dy > 0) -> slide trước. Kéo lên (dy < 0) -> slide sau.
+                if(dy > 0) goTo(current - 1); 
+                else goTo(current + 1);
             } else {
                 goTo(current);
             }
-            resetAuto();
+            resetCarouselAuto();
             window.removeEventListener('pointermove', onPointerMove, {passive:false});
             window.removeEventListener('pointerup', onPointerUp, {passive:false});
         }
-        
+
+        // Thêm chức năng lăn chuột
+        function onWheel(e) {
+            // Ngăn chặn hành vi cuộn mặc định của trang khi con trỏ ở trên carousel
+            e.preventDefault(); 
+            if (e.deltaY > 0) { // Lăn xuống
+                goTo(current + 1);
+            } else { // Lăn lên
+                goTo(current - 1);
+            }
+            // Khởi động lại bộ đếm thời gian tự động chuyển slide
+            resetCarouselAuto();
+        }
         carousel.addEventListener('pointerdown', onPointerDown, {passive:false});
 
-        carousel.addEventListener('mouseenter', ()=> clearInterval(autoId));
-        carousel.addEventListener('mouseleave', ()=> resetAuto());
+        carousel.addEventListener('mouseenter', ()=> clearInterval(carouselAutoId));
+        carousel.addEventListener('mouseleave', ()=> resetCarouselAuto());
 
-        resetAuto();
+        carousel.addEventListener('wheel', onWheel, {passive: false}); // Thêm sự kiện wheel
 
         function escapeHtml(s){
             return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -1643,21 +1686,31 @@
         const dishFormModal = document.getElementById('dishFormModal');
         const dishForm = document.getElementById('dishForm');
         const dishFormTitle = document.getElementById('dishFormTitle');
-        const dishIdInput = document.getElementById('dishIdInput');
+        let dishIdInput = document.getElementById('dishIdInput'); // Sử dụng let để có thể gán lại nếu cần
         const variantsContainer = document.getElementById('variantsContainer');
         const toppingsContainer = document.getElementById('toppingsContainer');
 
+        // Hàm để cập nhật tất cả các phần động của trang
+        function saveAndRerender() {
+            renderGrid(dishes);
+            renderReviews(reviewSortSelect.value); // Render lại review với thứ tự sắp xếp hiện tại
+            renderOrderTab(); // Cập nhật lại tab đặt hàng
+            populateReviewDishSelect(); // Cập nhật lại danh sách món ăn trong form review
+            // Nếu modal chi tiết đang mở và món ăn hiện tại đã bị xóa/sửa, đóng nó
+            if (modal.classList.contains('active') && !dishes.some(d => d.id === currentDishId)) {
+                modal.classList.remove('active');
+            }
+        }
+
         // Hiển thị nút + khi ở tab menu
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.attributeName === 'class') {
-                    const menuPane = document.getElementById('menu');
-                    addDishBtn.classList.toggle('visible', menuPane.classList.contains('active'));
-                }
+        // Tối ưu hóa: Thay vì MutationObserver, xử lý trực tiếp trong tab click handler
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                addDishBtn.classList.toggle('visible', btn.dataset.target === 'menu');
             });
         });
-        observer.observe(document.getElementById('menu'), { attributes: true });
-        addDishBtn.classList.toggle('visible', document.getElementById('menu').classList.contains('active'));
+        // Khởi tạo trạng thái ban đầu cho nút addDishBtn
+        addDishBtn.classList.toggle('visible', document.querySelector('.tab-btn.active')?.dataset.target === 'menu');
 
         // Xử lý input file
         function handleFileInput(inputGroup) {
@@ -1697,6 +1750,12 @@
             document.querySelectorAll('.image-preview').forEach(p => p.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
             dishFormModal.classList.add('active');
         });
+        
+        // Hàm tạo màu ngẫu nhiên nhưng muted hơn cho avatar
+        function getRandomMutedColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 30%, 60%)`; // Giảm độ bão hòa và tăng độ sáng nhẹ
+        }
 
         // Đóng form
         dishFormModal.querySelectorAll('.close-form-modal').forEach(btn => {
@@ -1796,11 +1855,7 @@
                 });
             }
 
-            renderGrid(dishes);
-            renderReviews();
-            renderReviews(reviewSortSelect.value); // Render lại review với thứ tự sắp xếp hiện tại
-            renderOrderTab(); // Cập nhật lại tab đặt hàng
-            populateReviewDishSelect(); // Cập nhật lại danh sách món ăn trong form review
+            saveAndRerender(); // Gọi hàm để cập nhật toàn bộ giao diện
             dishFormModal.classList.remove('active');
         });
 
@@ -1810,12 +1865,7 @@
                 const index = dishes.findIndex(d => d.id === currentDishId);
                 if (index !== -1) {
                     dishes.splice(index, 1);
-                    renderGrid(dishes);
-                    renderReviews();
-                    renderGrid(dishes); // Cập nhật lại cả 2 mục
-                    renderOrderTab();
-                    populateReviewDishSelect();
-                    renderReviews(reviewSortSelect.value);
+                    saveAndRerender(); // Gọi hàm để cập nhật toàn bộ giao diện
                     modal.classList.remove('active');
                 }
             }
